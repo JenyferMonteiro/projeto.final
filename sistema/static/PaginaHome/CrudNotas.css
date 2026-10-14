@@ -1,0 +1,944 @@
+/* =========================================================
+   CRUD DE NOTAS  -  Página "Minhas notas"
+
+   Estilo da janela que abre ao CLICAR (ou tocar) em uma
+   nota da tabela: listar, adicionar, editar e excluir as
+   atividades daquele bimestre.
+
+   Cores padrão do StudyPlan:
+   azul     rgb(89, 89, 189)
+   laranja  rgb(245, 122, 28)   (mesmo tom da foto laranja)
+   ========================================================= */
+
+:root {
+    --azul: rgb(89, 89, 189);
+    --azul-escuro: rgb(70, 70, 158);
+    --azul-claro: rgb(236, 236, 248);
+
+    --laranja: rgb(245, 122, 28);
+    --laranja-claro: rgb(254, 239, 226);
+    --laranja-texto: rgb(170, 78, 8);
+
+    --cinza-texto: rgb(38, 38, 52);
+    --cinza-suave: rgb(107, 107, 128);
+    --cinza-borda: rgb(226, 226, 236);
+    --cinza-fundo: rgb(246, 246, 250);
+
+    --branco: #ffffff;
+}
+
+
+/* =========================
+   CÉLULAS DA TABELA
+   (clicar = notas | segurar = sub-atividades)
+========================= */
+
+.celula-bimestre {
+    position: relative;
+
+    cursor: pointer;
+
+    font-weight: 600;
+
+    user-select: none;
+    -webkit-user-select: none;
+    -webkit-touch-callout: none;
+
+    touch-action: manipulation;
+
+    transition: background-color 0.2s, color 0.2s;
+}
+
+.celula-bimestre:hover,
+.celula-bimestre:focus-visible {
+    background-color: var(--azul-claro);
+
+    color: var(--azul-escuro);
+
+    outline: none;
+}
+
+.celula-bimestre:focus-visible {
+    box-shadow: inset 0 0 0 2px var(--azul);
+}
+
+/* Barrinha que enche enquanto o aluno segura a nota */
+
+.celula-bimestre::after {
+    content: "";
+
+    position: absolute;
+
+    left: 0;
+    bottom: 0;
+
+    width: 100%;
+    height: 4px;
+
+    background-color: var(--azul);
+
+    transform: scaleX(0);
+
+    transform-origin: left;
+}
+
+.celula-bimestre.segurando {
+    background-color: var(--azul-claro);
+}
+
+.celula-bimestre.segurando::after {
+    transform: scaleX(1);
+
+    /* 0.12s de espera + 0.43s enchendo = 0.55s (igual ao CrudNotas.js) */
+    transition: transform 0.43s linear 0.12s;
+}
+
+/* Piscada rápida quando a nota da célula muda */
+
+.celula-bimestre.atualizada {
+    animation: celula-atualizada 1.2s ease-out;
+}
+
+@keyframes celula-atualizada {
+    0% {
+        background-color: var(--azul);
+        color: var(--branco);
+    }
+
+    100% {
+        background-color: var(--azul-claro);
+        color: var(--azul-escuro);
+    }
+}
+
+
+/* =========================
+   DICA ACIMA DA TABELA
+========================= */
+
+.dica-tabela {
+    display: inline-flex;
+
+    align-items: center;
+
+    gap: 8px;
+
+    margin-top: 14px;
+
+    padding: 8px 14px;
+
+    background-color: var(--branco);
+
+    color: var(--cinza-texto);
+
+    border-radius: 999px;
+
+    font-size: 14px;
+
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.dica-tabela * {
+    background-color: transparent;
+}
+
+.dica-tabela svg {
+    width: 16px;
+    height: 16px;
+
+    color: var(--azul);
+
+    flex-shrink: 0;
+}
+
+
+/* =========================
+   FUNDO ESCURO DA JANELA
+========================= */
+
+.janela-notas-fundo {
+    display: none;
+
+    position: fixed;
+
+    inset: 0;
+
+    padding: 20px;
+
+    align-items: center;
+
+    justify-content: center;
+
+    background-color: rgba(20, 20, 45, 0.55);
+
+    z-index: 1000;
+}
+
+.janela-notas-fundo.aberta {
+    display: flex;
+}
+
+/*
+    O PaginaHome.css pinta TODOS os elementos de laranja
+    (regra "*"). Aqui dentro a gente volta ao transparente
+    e cada parte recebe a sua cor logo abaixo.
+*/
+
+.janela-notas-fundo * {
+    background-color: transparent;
+}
+
+/* Garante que o atributo "hidden" esconda mesmo os botões estilizados */
+
+.janela-notas-fundo [hidden] {
+    display: none;
+}
+
+
+/* =========================
+   JANELA
+========================= */
+
+.janela-notas {
+    width: 100%;
+    max-width: 480px;
+    max-height: calc(100vh - 40px);
+
+    display: flex;
+
+    flex-direction: column;
+
+    background-color: var(--branco);
+
+    color: var(--cinza-texto);
+
+    border-radius: 20px;
+
+    box-shadow: 0 24px 60px rgba(20, 20, 45, 0.35);
+
+    overflow: hidden;
+
+    text-align: left;
+
+    font-family: sans-serif;
+
+    animation: janela-notas-entrar 0.22s ease-out;
+}
+
+@keyframes janela-notas-entrar {
+    from {
+        opacity: 0;
+        transform: translateY(12px) scale(0.98);
+    }
+
+    to {
+        opacity: 1;
+        transform: none;
+    }
+}
+
+
+/* =========================
+   TOPO DA JANELA
+========================= */
+
+.janela-notas-topo {
+    display: flex;
+
+    align-items: flex-start;
+
+    gap: 14px;
+
+    padding: 22px 22px 16px;
+
+    border-bottom: 1px solid var(--cinza-borda);
+}
+
+.janela-notas-icone {
+    width: 44px;
+    height: 44px;
+
+    flex-shrink: 0;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    border-radius: 12px;
+
+    background-color: var(--azul-claro);
+
+    color: var(--azul);
+}
+
+.janela-notas-icone svg {
+    width: 22px;
+    height: 22px;
+}
+
+.janela-notas .janela-notas-titulo {
+    font-size: 20px;
+
+    font-weight: 700;
+
+    color: var(--cinza-texto);
+}
+
+.janela-notas-subtitulo {
+    margin-top: 3px;
+
+    font-size: 14px;
+
+    color: var(--cinza-suave);
+}
+
+.botao-fechar-janela {
+    width: 40px;
+    height: 40px;
+
+    margin-left: auto;
+
+    flex-shrink: 0;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    border: none;
+
+    border-radius: 10px;
+
+    color: var(--cinza-suave);
+
+    cursor: pointer;
+
+    transition: background-color 0.2s, color 0.2s;
+}
+
+.janela-notas-fundo .botao-fechar-janela:hover {
+    background-color: var(--cinza-fundo);
+
+    color: var(--cinza-texto);
+}
+
+
+/* =========================
+   CORPO DA JANELA
+========================= */
+
+.janela-notas-corpo {
+    padding: 18px 22px 22px;
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 18px;
+
+    overflow-y: auto;
+}
+
+
+/* =========================
+   RESUMO DO BIMESTRE
+========================= */
+
+.janela-notas-fundo .resumo-bimestre {
+    padding: 16px;
+
+    border-radius: 14px;
+
+    background-color: var(--cinza-fundo);
+}
+
+.resumo-linha {
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    gap: 10px;
+
+    flex-wrap: wrap;
+}
+
+.resumo-numeros {
+    display: flex;
+
+    align-items: baseline;
+
+    gap: 6px;
+}
+
+.resumo-total {
+    font-size: 30px;
+
+    font-weight: 800;
+
+    color: var(--azul);
+}
+
+.resumo-maximo {
+    font-size: 15px;
+
+    font-weight: 600;
+
+    color: var(--cinza-suave);
+}
+
+.resumo-situacao {
+    padding: 5px 10px;
+
+    border-radius: 999px;
+
+    font-size: 13px;
+
+    font-weight: 700;
+}
+
+.janela-notas-fundo .resumo-situacao.na-media {
+    background-color: var(--azul-claro);
+
+    color: var(--azul-escuro);
+}
+
+.janela-notas-fundo .resumo-situacao.abaixo {
+    background-color: var(--laranja-claro);
+
+    color: var(--laranja-texto);
+}
+
+.janela-notas-fundo .resumo-situacao.vazio {
+    background-color: var(--branco);
+
+    color: var(--cinza-suave);
+}
+
+/* Barra de progresso com a marquinha da média (60%) */
+
+.janela-notas-fundo .resumo-barra {
+    position: relative;
+
+    height: 10px;
+
+    margin-top: 12px;
+
+    border-radius: 999px;
+
+    background-color: var(--cinza-borda);
+}
+
+.janela-notas-fundo .resumo-barra-preenchida {
+    height: 100%;
+
+    width: 0;
+
+    border-radius: 999px;
+
+    background-color: var(--azul);
+
+    transition: width 0.35s ease, background-color 0.35s;
+}
+
+.janela-notas-fundo .resumo-barra-preenchida.abaixo {
+    background-color: var(--laranja);
+}
+
+.janela-notas-fundo .resumo-marca-media {
+    position: absolute;
+
+    top: -3px;
+    left: 60%;
+
+    width: 2px;
+    height: 16px;
+
+    border-radius: 2px;
+
+    background-color: var(--cinza-texto);
+}
+
+.resumo-legenda {
+    margin-top: 8px;
+
+    font-size: 13px;
+
+    color: var(--cinza-suave);
+}
+
+
+/* =========================
+   LISTA DE ATIVIDADES
+========================= */
+
+.lista-titulo {
+    margin-bottom: 8px;
+
+    font-size: 12px;
+
+    font-weight: 700;
+
+    letter-spacing: 0.05em;
+
+    text-transform: uppercase;
+
+    color: var(--cinza-suave);
+}
+
+.lista-atividades {
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 8px;
+
+    max-height: 230px;
+
+    overflow-y: auto;
+}
+
+.janela-notas-fundo .atividade-item {
+    display: flex;
+
+    align-items: center;
+
+    gap: 8px;
+
+    padding: 8px 8px 8px 14px;
+
+    border: 1px solid var(--cinza-borda);
+
+    border-radius: 12px;
+
+    background-color: var(--branco);
+
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.janela-notas-fundo .atividade-item.em-edicao {
+    border-color: var(--azul);
+
+    box-shadow: 0 0 0 3px rgba(89, 89, 189, 0.15);
+}
+
+.atividade-nome {
+    flex: 1;
+
+    font-size: 15px;
+
+    font-weight: 600;
+
+    word-break: break-word;
+}
+
+.atividade-valor {
+    font-size: 15px;
+
+    font-weight: 700;
+
+    color: var(--azul);
+
+    white-space: nowrap;
+}
+
+.lista-vazia,
+.lista-carregando {
+    padding: 18px;
+
+    border: 1.5px dashed var(--cinza-borda);
+
+    border-radius: 12px;
+
+    text-align: center;
+
+    font-size: 14px;
+
+    color: var(--cinza-suave);
+}
+
+
+/* =========================
+   BOTÕES DE ÍCONE (editar / excluir)
+========================= */
+
+.botao-icone {
+    min-width: 38px;
+    height: 38px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    border: none;
+
+    border-radius: 10px;
+
+    color: var(--cinza-suave);
+
+    font-size: 13px;
+
+    font-weight: 700;
+
+    cursor: pointer;
+
+    transition: background-color 0.2s, color 0.2s;
+}
+
+.botao-icone svg {
+    width: 18px;
+    height: 18px;
+}
+
+.janela-notas-fundo .botao-icone:hover {
+    background-color: var(--azul-claro);
+
+    color: var(--azul);
+}
+
+.janela-notas-fundo .botao-icone.excluir:hover {
+    background-color: var(--laranja-claro);
+
+    color: var(--laranja-texto);
+}
+
+/* Segundo toque na lixeira: "Excluir?" */
+
+.janela-notas-fundo .botao-icone.confirmando,
+.janela-notas-fundo .botao-icone.confirmando:hover {
+    padding: 0 12px;
+
+    background-color: var(--laranja);
+
+    color: var(--cinza-texto);
+}
+
+
+/* =========================
+   FORMULÁRIO
+========================= */
+
+.form-notas {
+    padding-top: 16px;
+
+    border-top: 1px solid var(--cinza-borda);
+}
+
+.form-notas-titulo {
+    margin-bottom: 12px;
+
+    font-size: 15px;
+
+    font-weight: 700;
+
+    color: var(--cinza-texto);
+}
+
+.form-notas-titulo.editando {
+    color: var(--azul);
+}
+
+.form-notas-campos {
+    display: grid;
+
+    grid-template-columns: 1fr 110px;
+
+    gap: 10px;
+}
+
+.form-notas label {
+    display: block;
+
+    margin-bottom: 6px;
+
+    font-size: 13px;
+
+    font-weight: 600;
+
+    color: var(--cinza-suave);
+}
+
+.janela-notas-fundo .form-notas input {
+    width: 100%;
+    height: 46px;
+
+    padding: 0 14px;
+
+    border: 1.5px solid var(--cinza-borda);
+
+    border-radius: 12px;
+
+    background-color: var(--cinza-fundo);
+
+    color: var(--cinza-texto);
+
+    /* 16px evita o zoom automático do iPhone */
+    font-size: 16px;
+
+    font-family: inherit;
+
+    transition: border-color 0.2s, box-shadow 0.2s, background-color 0.2s;
+}
+
+.janela-notas-fundo .form-notas input:focus {
+    outline: none;
+
+    border-color: var(--azul);
+
+    background-color: var(--branco);
+
+    box-shadow: 0 0 0 4px rgba(89, 89, 189, 0.15);
+}
+
+.form-notas-aviso {
+    min-height: 18px;
+
+    margin-top: 8px;
+
+    font-size: 13px;
+
+    font-weight: 600;
+
+    color: var(--laranja-texto);
+}
+
+.form-notas-botoes {
+    display: flex;
+
+    justify-content: flex-end;
+
+    gap: 10px;
+
+    margin-top: 6px;
+}
+
+.botao-principal,
+.botao-secundario {
+    height: 46px;
+
+    padding: 0 20px;
+
+    display: inline-flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 6px;
+
+    border-radius: 12px;
+
+    font-size: 15px;
+
+    font-weight: 700;
+
+    font-family: inherit;
+
+    cursor: pointer;
+
+    transition: background-color 0.2s, opacity 0.2s;
+}
+
+.botao-principal svg,
+.botao-secundario svg {
+    width: 18px;
+    height: 18px;
+}
+
+.janela-notas-fundo .botao-principal {
+    border: none;
+
+    background-color: var(--azul);
+
+    color: var(--branco);
+}
+
+.janela-notas-fundo .botao-principal:hover {
+    background-color: var(--azul-escuro);
+}
+
+.botao-principal:disabled {
+    opacity: 0.6;
+
+    cursor: wait;
+}
+
+.janela-notas-fundo .botao-secundario {
+    border: 1px solid var(--cinza-borda);
+
+    background-color: var(--cinza-fundo);
+
+    color: var(--cinza-texto);
+}
+
+.janela-notas-fundo .botao-secundario:hover {
+    background-color: var(--cinza-borda);
+}
+
+
+/* =========================
+   ATALHO PARA SUB-ATIVIDADES
+========================= */
+
+.janela-notas-fundo .atalho-sub {
+    width: 100%;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+
+    padding: 12px 14px;
+
+    border: none;
+
+    border-radius: 12px;
+
+    background-color: var(--laranja-claro);
+
+    color: var(--laranja-texto);
+
+    font-size: 14px;
+
+    font-family: inherit;
+
+    text-align: left;
+
+    cursor: pointer;
+
+    transition: filter 0.2s;
+}
+
+.janela-notas-fundo .atalho-sub:hover {
+    filter: brightness(0.97);
+}
+
+.atalho-sub svg {
+    width: 20px;
+    height: 20px;
+
+    flex-shrink: 0;
+}
+
+.atalho-sub span {
+    flex: 1;
+}
+
+
+/* =========================
+   CELULAR / APLICATIVO
+   A janela vira uma "gaveta" que sobe de baixo
+========================= */
+
+@media (max-width: 600px) {
+
+    .dica-tabela {
+        border-radius: 14px;
+
+        text-align: left;
+    }
+
+
+    .janela-notas-fundo {
+        padding: 0;
+
+        align-items: flex-end;
+    }
+
+
+    .janela-notas {
+        max-width: none;
+        max-height: 92vh;
+
+        border-radius: 22px 22px 0 0;
+
+        padding-bottom: env(safe-area-inset-bottom);
+
+        animation-name: janela-notas-subir;
+    }
+
+
+    /* Tracinho no topo, como nas gavetas de aplicativo */
+
+    .janela-notas-topo {
+        position: relative;
+
+        padding-top: 26px;
+    }
+
+    .janela-notas-topo::before {
+        content: "";
+
+        position: absolute;
+
+        top: 9px;
+        left: 50%;
+
+        width: 40px;
+        height: 4px;
+
+        margin-left: -20px;
+
+        border-radius: 4px;
+
+        background-color: var(--cinza-borda);
+    }
+
+
+    .janela-notas-corpo {
+        padding: 16px 18px 20px;
+    }
+
+
+    .form-notas-campos {
+        grid-template-columns: 1fr 96px;
+    }
+
+
+    .form-notas-botoes .botao-principal,
+    .form-notas-botoes .botao-secundario {
+        flex: 1;
+    }
+}
+
+@keyframes janela-notas-subir {
+    from {
+        transform: translateY(100%);
+    }
+
+    to {
+        transform: none;
+    }
+}
+
+
+/* Quem prefere menos movimento na tela */
+
+@media (prefers-reduced-motion: reduce) {
+
+    .janela-notas,
+    .celula-bimestre.atualizada {
+        animation: none;
+    }
+
+    .celula-bimestre.segurando::after {
+        transition: none;
+    }
+}
+
+.celula-bimestre.nota-vermelha {
+    color: #dc2626 !important;
+    font-weight: 600;
+}
+
+.celula-bimestre.nota-verde {
+    color: #16a34a !important;
+    font-weight: 600;
+}

@@ -1,0 +1,503 @@
+/* ==========================================================================
+   ESTILOS DA TELA DE ESTATÍSTICAS (LAYOUT SANFONA 100% FOCADO NO ALUNO)
+   StudyPlan - Sistema Acadêmico
+   ========================================================================== */
+
+:root {
+    --primary-blue: #1d63ff;
+    --primary-blue-dark: #1449c2;
+    --primary-blue-light: #eff4ff;
+    --orange-primary: #ff7f24;
+    --orange-gradient: linear-gradient(135deg, #ffa825 0%, #ff7f24 50%, #fc660f 100%);
+    --color-success: #16a34a;
+    --color-danger: #dc2626;
+    --color-warning: #f59e0b;
+    --color-text-dark: #0f172a;
+    --color-text-muted: #64748b;
+    --color-text-light: #94a3b8;
+    --color-border: #e2e8f0;
+    --shadow-card: 0 10px 25px -5px rgba(0, 0, 0, 0.08), 0 8px 10px -6px rgba(0, 0, 0, 0.04);
+    --shadow-soft: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+}
+
+body {
+    min-height: 100vh;
+    background-color: rgba(255, 140, 0, 0.856);
+    color: var(--color-text-dark);
+    display: flex;
+    overflow-x: hidden;
+}
+
+/* LAYOUT GERAL (100% LARGURA INTEGRAÇÃO COM O SISTEMA) */
+.painel-container {
+    display: flex;
+    width: 100%;
+    min-height: 100vh;
+}
+
+.conteudo-principal {
+    margin-left: 0;
+    flex: 1;
+    padding: 32px 48px 60px 48px;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+/* HEADER SIMPLES */
+.header-simples {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 28px;
+}
+
+.titulo-secao h2 {
+    font-size: 28px;
+    font-weight: 800;
+    color: #ffffff;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+    letter-spacing: -0.4px;
+}
+
+.titulo-secao p {
+    font-size: 15px;
+    color: rgba(255, 255, 255, 0.9);
+    margin-top: 4px;
+}
+
+/* LISTA DE SANFONAS */
+.lista-accordions-container {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+}
+
+.accordion-disciplina-item {
+    background: #ffffff;
+    border-radius: 16px;
+    box-shadow: var(--shadow-card);
+    overflow: hidden;
+    transition: all 0.3s ease;
+    border: 2px solid transparent;
+}
+
+.accordion-disciplina-item:hover {
+    box-shadow: 0 14px 28px rgba(0, 0, 0, 0.12);
+}
+
+.accordion-disciplina-item.aberto {
+    border-color: var(--primary-blue);
+}
+
+/* CABEÇALHO DA SANFONA */
+.accordion-header {
+    width: 100%;
+    background: #ffffff;
+    border: none;
+    padding: 18px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    cursor: pointer;
+    text-align: left;
+    outline: none;
+    transition: background 0.2s;
+}
+
+.accordion-header:hover {
+    background: #f8fafc;
+}
+
+.accordion-header-info {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+.disc-icone {
+    width: 40px;
+    height: 40px;
+    background: var(--primary-blue-light);
+    color: var(--primary-blue);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.disc-icone svg {
+    stroke: var(--primary-blue);
+}
+
+.disc-titulo {
+    font-size: 19px;
+    font-weight: 700;
+    color: var(--color-text-dark);
+}
+
+.accordion-header-status {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.badge-status-resumo {
+    font-size: 13px;
+    font-weight: 700;
+    padding: 6px 14px;
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.badge-status-resumo.ok {
+    background: #dcfce7;
+    color: #15803d;
+}
+
+.badge-status-resumo.atencao {
+    background: #fee2e2;
+    color: #b91c1c;
+}
+
+.seta-chevron {
+    color: var(--color-text-muted);
+    display: flex;
+    align-items: center;
+    transition: transform 0.3s ease;
+}
+
+.accordion-disciplina-item.aberto .seta-chevron {
+    transform: rotate(180deg);
+    color: var(--primary-blue);
+}
+
+/* CORPO DA SANFONA */
+.accordion-body {
+    display: none;
+    padding: 24px 28px 32px 28px;
+    border-top: 1px solid #f1f5f9;
+    background: #ffffff;
+    animation: fadeIn 0.3s ease-in-out;
+}
+
+.accordion-disciplina-item.aberto .accordion-body {
+    display: block;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-6px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.card-estatisticas-interno {
+    margin-bottom: 24px;
+}
+
+.card-topo {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #f1f5f9;
+}
+
+.disciplina-subtitulo {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--color-text-dark);
+}
+
+.pontos-destaque {
+    text-align: right;
+}
+
+.pontos-rotulo {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--color-text-muted);
+}
+
+.pontos-valor {
+    font-size: 28px;
+    font-weight: 800;
+    color: var(--color-success);
+}
+
+.pontos-valor.alerta {
+    color: var(--color-danger);
+}
+
+.grafico-wrapper {
+    position: relative;
+    width: 100%;
+    height: 300px;
+    margin-bottom: 24px;
+}
+
+.grafico-legenda-inferior {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 24px;
+    margin-top: 14px;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--color-text-muted);
+}
+
+.legenda-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.linha-amostra-azul {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 3px;
+    background: var(--primary-blue);
+    border-radius: 2px;
+    position: relative;
+}
+
+.linha-amostra-azul::after {
+    content: '';
+    position: absolute;
+    width: 7px;
+    height: 7px;
+    background: var(--primary-blue);
+    border: 2px solid #ffffff;
+    border-radius: 50%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.bimestres-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 14px;
+    margin-top: 20px;
+}
+
+.card-bimestre {
+    background: #f8fafc;
+    border: 1.5px solid #edf2f7;
+    border-radius: 12px;
+    padding: 16px 12px;
+    text-align: center;
+    transition: all 0.2s ease;
+}
+
+.card-bimestre:hover {
+    border-color: #cbd5e1;
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-soft);
+}
+
+.bimestre-rotulo {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--color-text-muted);
+    margin-bottom: 6px;
+}
+
+.bimestre-valor {
+    font-size: 24px;
+    font-weight: 800;
+    color: var(--color-success);
+    margin-bottom: 2px;
+}
+
+.bimestre-valor.abaixo {
+    color: var(--color-danger);
+}
+
+.bimestre-meta {
+    font-size: 12px;
+    color: var(--color-text-light);
+}
+
+/* CARD VISUAL DE STATUS */
+.card-status-visual-interno {
+    background: #f8fafc;
+    border: 1px solid var(--color-border);
+    border-radius: 14px;
+    padding: 20px 24px;
+    margin-top: 20px;
+}
+
+.status-visual-cabecalho {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 16px;
+}
+
+.status-titulo-area {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.icone-status-grande {
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    font-weight: 700;
+}
+
+.icone-ok {
+    background: #dcfce7;
+    color: #15803d;
+}
+
+.icone-atencao {
+    background: #fee2e2;
+    color: #b91c1c;
+}
+
+.status-titulo-area h5 {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--color-text-dark);
+}
+
+.status-titulo-area p {
+    font-size: 13px;
+    color: var(--color-text-muted);
+}
+
+.badge-status-grande {
+    font-size: 12px;
+    font-weight: 800;
+    padding: 5px 14px;
+    border-radius: 20px;
+    text-transform: uppercase;
+}
+
+.badge-ok-bg {
+    background: #dcfce7;
+    color: #15803d;
+}
+
+.badge-atencao-bg {
+    background: #fee2e2;
+    color: #b91c1c;
+}
+
+.barra-progresso-container {
+    margin-bottom: 20px;
+}
+
+.barra-progresso-rotulos {
+    display: flex;
+    justify-content: space-between;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--color-text-muted);
+    margin-bottom: 6px;
+}
+
+.trilho-progresso {
+    width: 100%;
+    height: 10px;
+    background: #e2e8f0;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.preenchimento-progresso {
+    height: 100%;
+    border-radius: 8px;
+    transition: width 0.6s ease;
+}
+
+.preenchimento-progresso.ok {
+    background: linear-gradient(90deg, #22c55e, #16a34a);
+}
+
+.preenchimento-progresso.atencao {
+    background: linear-gradient(90deg, #f87171, #dc2626);
+}
+
+.grid-indicadores-visuais {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+}
+
+.card-indicador-item {
+    background: #ffffff;
+    border: 1px solid var(--color-border);
+    border-radius: 10px;
+    padding: 12px;
+    text-align: center;
+}
+
+.rotulo-indicador {
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--color-text-muted);
+    display: block;
+    margin-bottom: 4px;
+}
+
+.card-indicador-item h4 {
+    font-size: 18px;
+    font-weight: 800;
+    color: var(--color-text-dark);
+}
+
+.destaque-meta {
+    background: #fffbe6;
+    border-color: #fef08a;
+}
+
+/* RESPONSIVIDADE */
+@media (max-width: 1024px) {
+    .bimestres-grid, .grid-indicadores-visuais {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+    .conteudo-principal {
+        padding: 16px;
+    }
+    .accordion-header {
+        padding: 14px 16px;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+    .accordion-header-status {
+        width: 100%;
+        justify-content: space-between;
+    }
+    .accordion-body {
+        padding: 16px;
+    }
+    .bimestres-grid, .grid-indicadores-visuais {
+        grid-template-columns: 1fr;
+    }
+}

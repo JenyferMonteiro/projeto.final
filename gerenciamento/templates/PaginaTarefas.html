@@ -1,0 +1,315 @@
+{% load static %}
+
+<!DOCTYPE html>
+
+<html lang="pt-br">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>StudyPlan | Suas Tarefas</title>
+
+    <link rel="stylesheet" href="{% static 'PaginaHome/PaginaHome.css' %}?v={% now 'U' %}">
+
+    <link rel="stylesheet" href="{% static 'PaginaTarefas/PaginaTarefas.css' %}?v={% now 'U' %}">
+
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+</head>
+
+<body>
+
+    <div class="conteudo-da-pagina pagina-tarefas">
+
+        <main class="quadro">
+
+            <!-- =========================
+                 TOPO
+            ========================= -->
+
+            <div class="quadro-topo">
+
+                <div class="quadro-titulo-grupo">
+
+
+                    <div>
+
+                        <h2 class="quadro-titulo">
+                            Quadro de Tarefas
+                        </h2>
+
+                        <p class="quadro-subtitulo">
+                            Organize seus estudos e mova cada tarefa conforme for avançando.
+                        </p>
+
+                    </div>
+
+                </div>
+
+                <button
+                    type="button"
+                    class="botao-nova-tarefa"
+                    onclick="abrirModalTarefa('PENDENTE')"
+                >
+                    <i data-lucide="plus"></i>
+                    Nova tarefa
+                </button>
+
+            </div>
+
+
+            <!-- =========================
+                 PROGRESSO
+            ========================= -->
+
+            <div class="quadro-progresso">
+
+                <p class="progresso-texto">
+                    <strong id="progresso-numero">0 de 0</strong> tarefas concluídas
+                </p>
+
+                <div class="progresso-barra">
+                    <div id="progresso-preenchido" class="progresso-preenchido"></div>
+                </div>
+
+                <span id="progresso-porcentagem" class="progresso-porcentagem">0%</span>
+
+            </div>
+
+
+            <!-- =========================
+                 COLUNAS
+            ========================= -->
+
+            <div class="colunas">
+
+                <section class="coluna coluna-afazer">
+
+                    <div class="coluna-topo">
+
+                        <span class="coluna-ponto"></span>
+
+                        <h3 class="coluna-titulo">A fazer</h3>
+
+                        <span id="contador-PENDENTE" class="coluna-contador">0</span>
+
+                        <button
+                            type="button"
+                            class="coluna-adicionar"
+                            aria-label="Adicionar tarefa em A fazer"
+                            title="Adicionar tarefa"
+                            onclick="abrirModalTarefa('PENDENTE')"
+                        >
+                            <i data-lucide="plus"></i>
+                        </button>
+
+                    </div>
+
+                    <div id="lista-PENDENTE" class="coluna-lista"></div>
+
+                </section>
+
+
+                <section class="coluna coluna-fazendo">
+
+                    <div class="coluna-topo">
+
+                        <span class="coluna-ponto"></span>
+
+                        <h3 class="coluna-titulo">Fazendo</h3>
+
+                        <span id="contador-PROGRESSO" class="coluna-contador">0</span>
+
+                        <button
+                            type="button"
+                            class="coluna-adicionar"
+                            aria-label="Adicionar tarefa em Fazendo"
+                            title="Adicionar tarefa"
+                            onclick="abrirModalTarefa('PROGRESSO')"
+                        >
+                            <i data-lucide="plus"></i>
+                        </button>
+
+                    </div>
+
+                    <div id="lista-PROGRESSO" class="coluna-lista"></div>
+
+                </section>
+
+
+                <section class="coluna coluna-concluido">
+
+                    <div class="coluna-topo">
+
+                        <span class="coluna-ponto"></span>
+
+                        <h3 class="coluna-titulo">Concluído</h3>
+
+                        <span id="contador-CONCLUIDO" class="coluna-contador">0</span>
+
+                        <button
+                            type="button"
+                            class="coluna-adicionar"
+                            aria-label="Adicionar tarefa em Concluído"
+                            title="Adicionar tarefa"
+                            onclick="abrirModalTarefa('CONCLUIDO')"
+                        >
+                            <i data-lucide="plus"></i>
+                        </button>
+
+                    </div>
+
+                    <div id="lista-CONCLUIDO" class="coluna-lista"></div>
+
+                </section>
+
+            </div>
+
+        </main>
+
+    </div>
+
+
+    <!-- =========================
+         MODAL: NOVA / EDITAR TAREFA
+    ========================= -->
+
+    <div id="modal-tarefa-fundo" class="modal-tarefa-fundo">
+
+        <div
+            class="modal-tarefa"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="modal-tarefa-titulo"
+        >
+
+            <div class="modal-tarefa-topo">
+
+                <h2 id="modal-tarefa-titulo" class="modal-tarefa-titulo">
+                    Nova tarefa
+                </h2>
+
+                <button
+                    type="button"
+                    class="botao-fechar-modal"
+                    aria-label="Fechar"
+                    onclick="fecharModalTarefa()"
+                >
+                    <i data-lucide="x"></i>
+                </button>
+
+            </div>
+
+
+            <form id="form-tarefa" novalidate>
+
+                <label for="tarefa-titulo">
+                    O que precisa ser feito?
+                </label>
+
+                <input
+                    type="text"
+                    id="tarefa-titulo"
+                    maxlength="100"
+                    placeholder="Ex.: Estudar para a prova de Física"
+                    autocomplete="off"
+                >
+
+
+                <label for="tarefa-data">
+                    Data limite
+                </label>
+
+                <input
+                    type="date"
+                    id="tarefa-data"
+                >
+
+
+                <span class="rotulo">
+                    Coluna
+                </span>
+
+                <div class="escolha-coluna">
+
+                    <input type="radio" name="status" id="status-pendente" value="PENDENTE" checked>
+                    <label for="status-pendente">
+                        <span class="bolinha afazer"></span> A fazer
+                    </label>
+
+                    <input type="radio" name="status" id="status-progresso" value="PROGRESSO">
+                    <label for="status-progresso">
+                        <span class="bolinha fazendo"></span> Fazendo
+                    </label>
+
+                    <input type="radio" name="status" id="status-concluido" value="CONCLUIDO">
+                    <label for="status-concluido">
+                        <span class="bolinha concluido"></span> Concluído
+                    </label>
+
+                </div>
+
+
+                <p id="modal-tarefa-aviso" class="modal-tarefa-aviso" role="alert"></p>
+
+
+                <div class="modal-tarefa-botoes">
+
+                    <button
+                        type="button"
+                        class="botao-cancelar"
+                        onclick="fecharModalTarefa()"
+                    >
+                        Cancelar
+                    </button>
+
+                    <button
+                        type="submit"
+                        class="botao-salvar"
+                    >
+                        Salvar
+                    </button>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+
+    <script>
+
+        const nomeUsuario = "{{ user.username }}";
+
+        const cursoUsuario = "{% if user.curso %}{{ user.curso.nome }}{% else %}Não informado{% endif %}";
+
+        const idUsuario = "{{ user.id }}";
+
+
+        const urlHome = "{% url 'home' %}";
+
+        const urlPerfil = "{% url 'perfil' %}";
+
+        const urlTarefas = "{% url 'tarefas' %}";
+
+        const urlDuvidas = "{% url 'duvidas' %}";
+
+        const urlEstatisticas = "{% url 'estatisticas' %}";
+
+        const urlManual = "{% url 'manual' %}";
+
+    </script>
+
+
+    <script src="{% static 'PaginaHome/menu.js' %}?v={% now 'U' %}"></script>
+
+    <script src="{% static 'PaginaTarefas/PaginaTarefas.js' %}?v={% now 'U' %}"></script>
+
+</body>
+
+</html>

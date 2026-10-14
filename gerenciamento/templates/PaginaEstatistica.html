@@ -1,0 +1,571 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>StudyPlan | Estatísticas de Desempenho</title>
+
+    <!-- CSS DO MENU -->
+    <link rel="stylesheet" href="{% static 'PaginaHome/PaginaHome.css' %}?v={% now 'U' %}">
+
+    <!-- CSS DA PÁGINA DE ESTATÍSTICAS -->
+    <link rel="stylesheet" href="{% static 'PaginaEstatistica/PaginaEstatistica.css' %}">
+
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+</head>
+
+<body>
+
+
+    <div class="painel-container">
+
+
+        <main class="conteudo-principal">
+
+
+            <!-- CABEÇALHO DA PÁGINA -->
+
+            <div class="header-simples">
+
+                <div class="titulo-secao">
+
+                    <h2>Estatísticas de Desempenho</h2>
+
+                    <p>
+                        Clique nas matérias abaixo para expandir e visualizar seus gráficos de desempenho
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <!-- LISTA DE SANFONAS -->
+
+            <div class="lista-accordions-container">
+
+
+                {% for disc in disciplinas_data %}
+
+
+                <div
+                    class="accordion-disciplina-item {% if forloop.first %}aberto{% endif %}"
+                    id="accordion-item-{{ disc.disciplina_id }}"
+                >
+
+
+                    <!-- CABEÇALHO DA SANFONA -->
+
+                    <button
+                        type="button"
+                        class="accordion-header"
+                        data-id="{{ disc.disciplina_id }}"
+                    >
+
+                        <div class="accordion-header-info">
+
+                            <span class="disc-icone">
+                                {{ disc.icone_svg|safe }}
+                            </span>
+
+                            <span class="disc-titulo">
+                                {{ disc.disciplina_nome }}
+                            </span>
+
+                        </div>
+
+
+                        <div class="accordion-header-status">
+
+
+                            <span
+                                class="badge-status-resumo {% if disc.total_atual >= 60 %}ok{% else %}atencao{% endif %}"
+                            >
+
+                                {% if disc.total_atual >= 60 %}
+
+                                    <svg
+                                        viewBox="0 0 24 24"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        width="14"
+                                        height="14"
+                                        stroke-width="3"
+                                    >
+                                        <polyline points="20 6 9 17 4 12"></polyline>
+                                    </svg>
+
+                                    <span>
+                                        Aprovado ({{ disc.total_atual }} pts)
+                                    </span>
+
+                                {% else %}
+
+                                    <svg
+                                        viewBox="0 0 24 24"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        width="14"
+                                        height="14"
+                                        stroke-width="2.5"
+                                    >
+                                        <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path>
+                                        <line x1="12" y1="9" x2="12" y2="13"></line>
+                                        <line x1="12" y1="17" x2="12.01" y2="17"></line>
+                                    </svg>
+
+                                    <span>
+                                        Atenção (Faltam {{ disc.falta_para_60 }} pts)
+                                    </span>
+
+                                {% endif %}
+
+                            </span>
+
+
+                            <span class="seta-chevron">
+
+                                <svg
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    width="18"
+                                    height="18"
+                                    stroke-width="2.5"
+                                >
+                                    <polyline points="6 9 12 15 18 9"></polyline>
+                                </svg>
+
+                            </span>
+
+
+                        </div>
+
+                    </button>
+
+
+                    <!-- CORPO DA SANFONA -->
+
+                    <div class="accordion-body">
+
+
+                        <!-- CARD DO GRÁFICO E BIMESTRES -->
+
+                        <div class="card-estatisticas-interno">
+
+
+                            <div class="card-topo">
+
+
+                                <div class="disciplina-area">
+
+                                    <h4 class="disciplina-subtitulo">
+                                        Evolução dos Bimestres
+                                    </h4>
+
+                                </div>
+
+
+                                <div class="pontos-destaque">
+
+                                    <div class="pontos-rotulo">
+                                        Total de Pontos
+                                    </div>
+
+                                    <div
+                                        class="pontos-valor {% if disc.total_atual < 60 %}alerta{% endif %}"
+                                    >
+                                        {{ disc.total_atual }} / 60
+                                    </div>
+
+                                </div>
+
+
+                            </div>
+
+
+                            <!-- GRÁFICO -->
+
+                            <div class="grafico-wrapper">
+
+                                <canvas
+                                    id="grafico-{{ disc.disciplina_id }}"
+                                ></canvas>
+
+                            </div>
+
+
+                            <!-- LEGENDA -->
+
+                            <div class="grafico-legenda-inferior">
+
+                                <div class="legenda-item">
+
+                                    <span class="linha-amostra-azul"></span>
+
+                                    <span>
+                                        Nota do Aluno
+                                    </span>
+
+                                </div>
+
+                            </div>
+
+
+                            <!-- CARDS DOS BIMESTRES -->
+
+                            <div class="bimestres-grid">
+
+
+                                {% for card in disc.cards_bimestres %}
+
+
+                                <div class="card-bimestre">
+
+
+                                    <div class="bimestre-rotulo">
+                                        {{ card.titulo }}
+                                    </div>
+
+
+                                    <div
+                                        class="bimestre-valor {% if card.status == 'abaixo' %}abaixo{% endif %}"
+                                    >
+                                        {{ card.nota_formatada }}
+                                    </div>
+
+
+                                    <div class="bimestre-meta">
+                                        / {{ card.max_pontos }} pts
+                                    </div>
+
+
+                                </div>
+
+
+                                {% endfor %}
+
+
+                            </div>
+
+
+                        </div>
+
+
+                        <!-- CARD DE STATUS -->
+
+                        <div class="card-status-visual-interno">
+
+
+                            <div class="status-visual-cabecalho">
+
+
+                                <div class="status-titulo-area">
+
+
+                                    <div
+                                        class="icone-status-grande {% if disc.total_atual >= 60 %}icone-ok{% else %}icone-atencao{% endif %}"
+                                    >
+
+
+                                        {% if disc.total_atual >= 60 %}
+
+                                            <svg
+                                                viewBox="0 0 24 24"
+                                                fill="none"
+                                                stroke="currentColor"
+                                                width="22"
+                                                height="22"
+                                                stroke-width="3"
+                                            >
+                                                <polyline points="20 6 9 17 4 12"></polyline>
+                                            </svg>
+
+                                        {% else %}
+
+                                            <svg
+                                                viewBox="0 0 24 24"
+                                                fill="none"
+                                                stroke="currentColor"
+                                                width="22"
+                                                height="22"
+                                                stroke-width="2.5"
+                                            >
+                                                <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path>
+                                                <line x1="12" y1="9" x2="12" y2="13"></line>
+                                                <line x1="12" y1="17" x2="12.01" y2="17"></line>
+                                            </svg>
+
+                                        {% endif %}
+
+
+                                    </div>
+
+
+                                    <div>
+
+                                        <h5>
+                                            Status da Disciplina
+                                        </h5>
+
+                                        <p>
+                                            {{ disc.diagnostico }}
+                                        </p>
+
+                                    </div>
+
+
+                                </div>
+
+
+                                <div
+                                    class="badge-status-grande {% if disc.total_atual >= 60 %}badge-ok-bg{% else %}badge-atencao-bg{% endif %}"
+                                >
+
+                                    {% if disc.total_atual >= 60 %}
+
+                                        Aprovado
+
+                                    {% else %}
+
+                                        Atenção (Faltam {{ disc.falta_para_60 }} pts)
+
+                                    {% endif %}
+
+                                </div>
+
+
+                            </div>
+
+
+                            <!-- BARRA DE PROGRESSO -->
+
+                            <div class="barra-progresso-container">
+
+
+                                <div class="barra-progresso-rotulos">
+
+                                    <span>
+                                        Progresso da Meta para Aprovação (60 pts)
+                                    </span>
+
+                                    <strong>
+                                        {{ disc.taxa_aproveitamento_pct }}%
+                                    </strong>
+
+                                </div>
+
+
+                                <div class="trilho-progresso">
+
+
+                                    {% if disc.total_atual >= 60 %}
+
+                                        <div
+                                            class="preenchimento-progresso ok"
+                                            data-progresso="{{ disc.taxa_aproveitamento_pct }}"
+                                        ></div>
+
+                                    {% else %}
+
+                                        <div
+                                            class="preenchimento-progresso atencao"
+                                            data-progresso="{{ disc.taxa_aproveitamento_pct }}"
+                                        ></div>
+
+                                    {% endif %}
+
+
+                                </div>
+
+
+                            </div>
+
+
+                            <!-- INDICADORES -->
+
+                            <div class="grid-indicadores-visuais">
+
+
+                                <div class="card-indicador-item">
+
+                                    <span class="rotulo-indicador">
+                                        Aproveitamento
+                                    </span>
+
+                                    <h4>
+                                        {{ disc.taxa_aproveitamento_pct }}%
+                                    </h4>
+
+                                </div>
+
+
+                                <div class="card-indicador-item">
+
+                                    <span class="rotulo-indicador">
+                                        Média Bim. Ímpar
+                                    </span>
+
+                                    <h4>
+                                        {{ disc.media_real_impar }} pts
+                                    </h4>
+
+                                </div>
+
+
+                                <div class="card-indicador-item">
+
+                                    <span class="rotulo-indicador">
+                                        Média Bim. Par
+                                    </span>
+
+                                    <h4>
+                                        {{ disc.media_real_par }} pts
+                                    </h4>
+
+                                </div>
+
+
+                                <div class="card-indicador-item destaque-meta">
+
+                                    <span class="rotulo-indicador">
+                                        Meta de Aprovação
+                                    </span>
+
+
+                                    {% if disc.falta_para_60 > 0 %}
+
+                                        <h4 style="color: #dc2626;">
+                                            Faltam {{ disc.falta_para_60 }} pts
+                                        </h4>
+
+                                    {% else %}
+
+                                        <h4 style="color: #16a34a;">
+                                            Aprovado!
+                                        </h4>
+
+                                    {% endif %}
+
+
+                                </div>
+
+
+                            </div>
+
+
+                        </div>
+
+
+                    </div>
+
+
+                </div>
+
+
+                {% empty %}
+
+
+                    <p>
+                        Nenhuma disciplina disponível no momento.
+                    </p>
+
+
+                {% endfor %}
+
+
+            </div>
+
+
+        </main>
+
+
+    </div>
+
+
+    <!-- =========================================================
+         VARIÁVEIS UTILIZADAS PELO MENU
+         ========================================================= -->
+
+    <script>
+
+        const nomeUsuario = "{{ user.username }}";
+
+        const cursoUsuario =
+            "{% if user.curso %}{{ user.curso.nome }}{% else %}Não informado{% endif %}";
+
+        const urlHome = "{% url 'home' %}";
+
+        const urlPerfil = "{% url 'perfil' %}";
+
+        const urlTarefas = "{% url 'tarefas' %}";
+
+        const urlDuvidas = "{% url 'duvidas' %}";
+
+        const urlEstatisticas = "{% url 'estatisticas' %}";
+
+        const urlManual = "{% url 'manual' %}";
+
+    </script>
+
+
+    <!-- =========================================================
+         JAVASCRIPT DO MENU
+         ========================================================= -->
+
+    <script src="{% static 'PaginaHome/menu.js' %}?v={% now 'U' %}"></script>
+
+
+    <!-- =========================================================
+         DADOS DAS ESTATÍSTICAS
+         ========================================================= -->
+
+    <script
+        type="application/json"
+        id="dados-disciplinas"
+    >{{ disciplinas_json|safe }}</script>
+
+
+    <!-- =========================================================
+         INICIALIZAÇÃO DOS DADOS E DA BARRA DE PROGRESSO
+         ========================================================= -->
+
+    <script>
+
+        const elementoDados =
+            document.getElementById("dados-disciplinas");
+
+        window.dadosDisciplinas =
+            JSON.parse(elementoDados.textContent);
+
+
+        document
+            .querySelectorAll(".preenchimento-progresso")
+            .forEach(function(barra) {
+
+                barra.style.width =
+                    barra.dataset.progresso + "%";
+
+            });
+
+    </script>
+
+
+    <!-- =========================================================
+         JAVASCRIPT DAS ESTATÍSTICAS
+         ========================================================= -->
+
+    <script src="{% static 'PaginaEstatistica/estatisticas.js' %}"></script>
+
+
+</body>
+
+</html>

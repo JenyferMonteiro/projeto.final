@@ -1,0 +1,901 @@
+/* =========================================================
+   MANUAL DE USO  -  Estilização / Front-end
+   Mesma identidade das telas de Notas e Tarefas:
+   fundo azul claro, azul marinho, cantos arredondados e
+   alternância entre azul forte e azul mais claro.
+   (substitui o CSS atual do manual; o HTML não muda)
+   ========================================================= */
+
+/* Variáveis com prefixo --mn- e valor reserva em cada uso:
+   não dependem do :root nem de outros arquivos CSS. */
+:root {
+    --mn-fundo-pagina: #ebecf2;
+    --mn-superficie: #ffffff;
+    --mn-superficie-alt: #eef3fd;
+    --mn-azul-tinta: #e3ebfc;
+    --mn-linha: #dde5f7;
+
+    --mn-marinho: #1b2f7e;
+    --mn-azul-forte: #2547c4;
+    --mn-azul-medio: #3a63d6;
+    --mn-azul-claro: #9db9f2;
+    --mn-cabecalho: #3b4cb8;
+    --mn-cabecalho-escuro: #2f3e9c;
+
+    --mn-texto: #26325f;
+    --mn-texto-suave: #5c6890;
+    --mn-texto-escuro: #262634;
+
+    --mn-laranja: #f57a1c;
+    --mn-laranja-claro: #fef0e0;
+    --mn-laranja-texto: #a04a08;
+
+    --mn-vermelho-claro: #fde8e8;
+    --mn-vermelho-texto: #b91c1c;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+
+/* =========================
+   FUNDO DA PÁGINA
+========================= */
+
+.conteudo-da-pagina.pagina-manual {
+    justify-content: flex-start;
+
+    align-items: center;
+
+    padding: 100px clamp(16px, 4vw, 48px) 48px;
+
+    text-align: left;
+
+    background-color: var(--mn-fundo-pagina, #c6c7c8);
+}
+
+/*
+    Caso o PaginaHome.css pinte os elementos de laranja
+    (regra "*"), dentro do manual voltamos ao transparente
+    e cada parte recebe a sua cor logo abaixo.
+*/
+
+.pagina-manual * {
+    background-color: transparent;
+}
+
+.pagina-manual a:focus-visible {
+    outline: 3px solid var(--mn-cabecalho, #3b4cb8);
+    outline-offset: 2px;
+}
+
+
+/* =========================
+   O MANUAL COMO PÁGINA
+   (sem cartão: o conteúdo fica direto sobre o fundo)
+========================= */
+
+.pagina-manual .manual {
+    width: 100%;
+    max-width: 1200px;
+
+    margin-top: 24px;
+
+    color: var(--mn-texto, #26325f);
+
+    line-height: 1.6;
+
+    font-size: clamp(1rem, 0.9rem + 0.3vw, 1.2rem);
+}
+
+
+/* =========================
+   CABEÇALHO DA PÁGINA
+   Ícone + título + subtítulo, igual às outras telas (sem banner)
+========================= */
+
+.manual-capa {
+    display: grid;
+
+    grid-template-columns: auto 1fr;
+
+    column-gap: 14px;
+
+    align-items: center;
+}
+
+/* Título e subtítulo entram direto na grade, ao lado do ícone */
+
+.capa-textos {
+    display: contents;
+}
+
+.pagina-manual .capa-icone {
+    grid-column: 1;
+    grid-row: 1;
+
+    display: flex;
+
+    align-items: center;
+
+    color: var(--mn-marinho, #1b2f7e);
+}
+
+.capa-icone svg {
+    width: 36px;
+    height: 36px;
+
+    stroke-width: 2.4;
+}
+
+.pagina-manual .capa-titulo {
+    grid-column: 2;
+    grid-row: 1;
+
+    font-size: clamp(1.6rem, 2.6vw, 2.1rem);
+
+    font-weight: 800;
+
+    line-height: 1.2;
+
+    color: var(--mn-marinho, #1b2f7e);
+}
+
+.capa-subtitulo {
+    grid-column: 2;
+    grid-row: 2;
+
+    margin-top: 6px;
+
+    font-size: clamp(1rem, 0.9rem + 0.3vw, 1.2rem);
+
+    line-height: 1.5;
+
+    color: var(--mn-texto-suave, #5c6890);
+}
+
+
+/* =========================
+   SUMÁRIO (atalhos)
+========================= */
+
+.manual-sumario {
+    display: flex;
+
+    flex-wrap: wrap;
+
+    align-items: center;
+
+    gap: 10px;
+
+    padding: 20px 0;
+
+    border-bottom: 1px solid var(--mn-linha, #dde5f7);
+}
+
+.sumario-rotulo {
+    margin-right: 6px;
+
+    font-size: clamp(0.95rem, 0.9rem + 0.15vw, 1.05rem);
+
+    font-weight: 700;
+
+    color: var(--mn-texto-suave, #5c6890);
+}
+
+.pagina-manual .sumario-link {
+    display: inline-flex;
+
+    align-items: center;
+
+    gap: 6px;
+
+    padding: 9px 16px;
+
+    border-radius: 999px;
+
+    background-color: var(--mn-superficie, #ffffff);
+
+    border: 1px solid var(--mn-linha, #dde5f7);
+
+    color: var(--mn-marinho, #1b2f7e);
+
+    font-size: clamp(0.95rem, 0.88rem + 0.2vw, 1.1rem);
+
+    font-weight: 600;
+
+    text-decoration: none;
+
+    transition: background-color 0.2s, color 0.2s, border-color 0.2s;
+}
+
+.sumario-link svg {
+    width: 18px;
+    height: 18px;
+
+    color: var(--mn-cabecalho, #3b4cb8);
+}
+
+.pagina-manual .sumario-link:hover,
+.pagina-manual .sumario-link:focus-visible {
+    background-color: var(--mn-azul-tinta, #e3ebfc);
+
+    border-color: var(--mn-cabecalho, #3b4cb8);
+
+    color: var(--mn-marinho, #1b2f7e);
+}
+
+
+/* =========================
+   SEÇÕES
+========================= */
+
+.manual-conteudo {
+    padding: 0 0 40px;
+}
+
+.manual-secao {
+    padding: 44px 0;
+
+    border-bottom: 1px solid var(--mn-linha, #dde5f7);
+
+    /* Para o link do sumário não parar embaixo do topo fixo */
+    scroll-margin-top: 90px;
+}
+
+.manual-secao:last-of-type {
+    border-bottom: none;
+}
+
+.secao-topo {
+    display: flex;
+
+    align-items: center;
+
+    gap: 14px;
+
+    margin-bottom: 18px;
+}
+
+.pagina-manual .secao-icone {
+    width: 54px;
+    height: 54px;
+
+    flex-shrink: 0;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    border-radius: 16px;
+
+    background-color: var(--mn-azul-tinta, #e3ebfc);
+
+    color: var(--mn-marinho, #1b2f7e);
+}
+
+.pagina-manual .secao-icone.laranja {
+    background-color: var(--mn-laranja-claro, #fef0e0);
+
+    color: var(--mn-laranja-texto, #a04a08);
+}
+
+.secao-icone svg {
+    width: 27px;
+    height: 27px;
+}
+
+.pagina-manual .secao-titulo {
+    font-size: clamp(1.4rem, 1.1rem + 0.9vw, 1.9rem);
+
+    font-weight: 800;
+
+    line-height: 1.25;
+
+    color: var(--mn-marinho, #1b2f7e);
+}
+
+.secao-onde {
+    font-size: clamp(0.95rem, 0.9rem + 0.15vw, 1.1rem);
+
+    color: var(--mn-texto-suave, #5c6890);
+}
+
+.manual-secao > p {
+    max-width: 80ch;
+
+    margin-bottom: 18px;
+
+    font-size: clamp(1rem, 0.9rem + 0.3vw, 1.2rem);
+
+    color: var(--mn-texto, #26325f);
+}
+
+.manual-secao strong {
+    font-weight: 700;
+
+    color: var(--mn-marinho, #1b2f7e);
+}
+
+
+/* =========================
+   PASSO A PASSO NUMERADO
+   Linhas alternadas e número alternando azul forte / azul médio
+========================= */
+
+.passos {
+    list-style: none;
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 14px;
+
+    margin: 18px 0;
+}
+
+.pagina-manual .passo {
+    display: flex;
+
+    align-items: flex-start;
+
+    gap: 18px;
+
+    padding: 18px 22px;
+
+    border: 1px solid var(--mn-linha, #dde5f7);
+
+    border-radius: 16px;
+
+    background-color: var(--mn-superficie, #ffffff);
+}
+
+.pagina-manual .passo:nth-child(even) {
+    background-color: var(--mn-azul-tinta, #e3ebfc);
+}
+
+.pagina-manual .passo-numero {
+    width: 38px;
+    height: 38px;
+
+    flex-shrink: 0;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    border-radius: 50%;
+
+    background-color: var(--mn-azul-forte, #2547c4);
+
+    color: #ffffff;
+
+    font-size: 17px;
+
+    font-weight: 800;
+}
+
+.pagina-manual .passo:nth-child(even) .passo-numero {
+    background-color: var(--mn-azul-medio, #3a63d6);
+}
+
+.passo-titulo {
+    display: block;
+
+    font-size: clamp(1.05rem, 0.95rem + 0.3vw, 1.3rem);
+
+    font-weight: 700;
+
+    color: var(--mn-marinho, #1b2f7e);
+}
+
+.passo-texto {
+    margin-top: 2px;
+
+    font-size: clamp(1rem, 0.9rem + 0.25vw, 1.15rem);
+
+    color: var(--mn-texto-suave, #5c6890);
+}
+
+/* Ícone "desenhado" dentro do texto (lápis, lixeira...) */
+
+.pagina-manual .icone-no-texto {
+    display: inline-flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    width: 28px;
+    height: 28px;
+
+    margin: 0 2px;
+
+    border-radius: 7px;
+
+    background-color: var(--mn-superficie, #ffffff);
+
+    border: 1px solid var(--mn-linha, #dde5f7);
+
+    color: var(--mn-marinho, #1b2f7e);
+
+    vertical-align: middle;
+}
+
+.icone-no-texto svg {
+    width: 16px;
+    height: 16px;
+}
+
+
+/* =========================
+   QUADRO DE PONTUAÇÃO
+   Faixa do topo alternando azul forte / azul claro
+========================= */
+
+.pontuacao {
+    display: grid;
+
+    grid-template-columns: repeat(5, 1fr);
+
+    gap: 14px;
+
+    margin: 18px 0;
+}
+
+.pagina-manual .pontuacao-item {
+    display: flex;
+
+    flex-direction: column;
+
+    padding: 22px 14px;
+
+    border-radius: 14px;
+
+    background-color: var(--mn-superficie, #ffffff);
+
+    border: 1px solid var(--mn-linha, #dde5f7);
+
+    border-top: 4px solid var(--mn-azul-forte, #2547c4);
+
+    text-align: center;
+}
+
+.pagina-manual .pontuacao-item:nth-child(even) {
+    border-top-color: var(--mn-azul-claro, #9db9f2);
+}
+
+.pagina-manual .pontuacao-item.meta {
+    background-color: var(--mn-laranja-claro, #fef0e0);
+
+    border-color: #f8d7b5;
+
+    border-top-color: var(--mn-laranja, #f57a1c);
+}
+
+.pontuacao-bimestre {
+    font-size: clamp(0.9rem, 0.85rem + 0.15vw, 1.05rem);
+
+    font-weight: 700;
+
+    color: var(--mn-texto-suave, #5c6890);
+}
+
+.pontuacao-valor {
+    margin: 2px 0;
+
+    font-size: clamp(1.9rem, 1.4rem + 1.4vw, 2.7rem);
+
+    font-weight: 800;
+
+    color: var(--mn-marinho, #1b2f7e);
+}
+
+.pontuacao-item.meta .pontuacao-valor {
+    color: var(--mn-laranja-texto, #a04a08);
+}
+
+.pontuacao-media {
+    font-size: clamp(0.9rem, 0.85rem + 0.15vw, 1.05rem);
+
+    color: var(--mn-texto-suave, #5c6890);
+}
+
+
+/* =========================
+   ETIQUETAS DE COR
+========================= */
+
+.etiquetas {
+    display: flex;
+
+    flex-wrap: wrap;
+
+    gap: 10px;
+
+    margin: 8px 0 4px;
+}
+
+.pagina-manual .etiqueta {
+    display: inline-flex;
+
+    align-items: center;
+
+    gap: 6px;
+
+    padding: 7px 16px;
+
+    border-radius: 999px;
+
+    font-size: clamp(0.9rem, 0.85rem + 0.2vw, 1.05rem);
+
+    font-weight: 700;
+}
+
+.etiqueta svg {
+    width: 17px;
+    height: 17px;
+}
+
+.pagina-manual .etiqueta.azul {
+    background-color: var(--mn-azul-tinta, #e3ebfc);
+
+    color: var(--mn-marinho, #1b2f7e);
+}
+
+.pagina-manual .etiqueta.laranja-forte {
+    background-color: var(--mn-laranja, #f57a1c);
+
+    color: var(--mn-texto-escuro, #262634);
+}
+
+.pagina-manual .etiqueta.vermelha {
+    background-color: var(--mn-vermelho-claro, #fde8e8);
+
+    color: var(--mn-vermelho-texto, #b91c1c);
+}
+
+.pagina-manual .etiqueta.laranja {
+    background-color: var(--mn-laranja-claro, #fef0e0);
+
+    color: var(--mn-laranja-texto, #a04a08);
+}
+
+.pagina-manual .etiqueta.cinza {
+    background-color: var(--mn-superficie, #ffffff);
+
+    color: var(--mn-texto-suave, #5c6890);
+
+    border: 1px solid var(--mn-linha, #dde5f7);
+}
+
+
+/* =========================
+   CAIXA DE DICA
+========================= */
+
+.pagina-manual .dica {
+    display: flex;
+
+    align-items: flex-start;
+
+    gap: 12px;
+
+    margin-top: 16px;
+
+    padding: 18px 22px;
+
+    border: 1px solid #f8d7b5;
+
+    border-radius: 14px;
+
+    background-color: var(--mn-laranja-claro, #fef0e0);
+
+    color: var(--mn-texto, #26325f);
+
+    font-size: clamp(1rem, 0.9rem + 0.25vw, 1.15rem);
+}
+
+.dica svg {
+    width: 24px;
+    height: 24px;
+
+    margin-top: 2px;
+
+    flex-shrink: 0;
+
+    color: var(--mn-laranja-texto, #a04a08);
+}
+
+
+/* =========================
+   MINI KANBAN (desenho)
+   Mesmas cores do quadro de tarefas
+========================= */
+
+.mini-kanban {
+    display: grid;
+
+    grid-template-columns: repeat(3, 1fr);
+
+    gap: 14px;
+
+    margin: 18px 0;
+}
+
+.pagina-manual .mini-coluna {
+    padding: 18px;
+
+    border: 1px solid var(--mn-linha, #dde5f7);
+
+    border-radius: 14px;
+
+    background-color: var(--mn-superficie, #ffffff);
+
+    border-top: 4px solid var(--mn-cor, #9db9f2);
+}
+
+.mini-coluna.afazer {
+    --mn-cor: var(--mn-azul-claro, #9db9f2);
+}
+
+.mini-coluna.fazendo {
+    --mn-cor: var(--mn-laranja, #f57a1c);
+}
+
+.mini-coluna.concluido {
+    --mn-cor: var(--mn-azul-forte, #2547c4);
+}
+
+.mini-coluna-titulo {
+    display: flex;
+
+    align-items: center;
+
+    gap: 6px;
+
+    margin-bottom: 10px;
+
+    font-size: clamp(0.95rem, 0.9rem + 0.2vw, 1.15rem);
+
+    font-weight: 800;
+
+    color: var(--mn-marinho, #1b2f7e);
+}
+
+.pagina-manual .mini-coluna-titulo::before {
+    content: "";
+
+    width: 8px;
+    height: 8px;
+
+    border-radius: 50%;
+
+    background-color: var(--mn-cor, #9db9f2);
+}
+
+.pagina-manual .mini-cartao {
+    height: 38px;
+
+    margin-top: 6px;
+
+    border-radius: 8px;
+
+    background-color: var(--mn-superficie-alt, #eef3fd);
+
+    border: 1px solid var(--mn-linha, #dde5f7);
+}
+
+.pagina-manual .mini-cartao::before {
+    content: "";
+
+    display: block;
+
+    width: 60%;
+    height: 6px;
+
+    margin: 15px 12px;
+
+    border-radius: 4px;
+
+    background-color: var(--mn-linha, #dde5f7);
+}
+
+
+/* =========================
+   FINAL: AINDA COM DÚVIDA?
+========================= */
+
+.pagina-manual .manual-fim {
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    gap: 16px;
+
+    flex-wrap: wrap;
+
+    margin-top: 12px;
+
+    padding: 28px 32px;
+
+    border: 1px solid var(--mn-linha, #dde5f7);
+
+    border-radius: 18px;
+
+    background-color: var(--mn-azul-tinta, #e3ebfc);
+}
+
+.fim-titulo {
+    font-size: clamp(1.15rem, 1rem + 0.6vw, 1.5rem);
+
+    font-weight: 800;
+
+    color: var(--mn-marinho, #1b2f7e);
+}
+
+.fim-texto {
+    font-size: clamp(1rem, 0.9rem + 0.25vw, 1.15rem);
+
+    color: var(--mn-texto-suave, #5c6890);
+}
+
+.pagina-manual .botao-duvidas {
+    display: inline-flex;
+
+    align-items: center;
+
+    gap: 8px;
+
+    height: 52px;
+
+    padding: 0 26px;
+
+    border-radius: 12px;
+
+    background-color: var(--mn-cabecalho, #3b4cb8);
+
+    color: #ffffff;
+
+    font-size: clamp(1rem, 0.9rem + 0.2vw, 1.1rem);
+
+    font-weight: 700;
+
+    text-decoration: none;
+
+    box-shadow: 0 6px 16px rgba(59, 76, 184, 0.28);
+
+    transition: background-color 0.2s;
+}
+
+.pagina-manual .botao-duvidas:hover {
+    background-color: var(--mn-cabecalho-escuro, #2f3e9c);
+}
+
+.botao-duvidas svg {
+    width: 20px;
+    height: 20px;
+}
+
+
+/* =========================
+   TABLET
+========================= */
+
+@media (max-width: 820px) {
+
+    .pontuacao {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .pontuacao-item.meta {
+        grid-column: 1 / -1;
+    }
+}
+
+
+/* =========================
+   CELULAR / APLICATIVO
+========================= */
+
+@media (max-width: 600px) {
+
+    .conteudo-da-pagina.pagina-manual {
+        padding: 90px 12px 28px;
+    }
+
+
+    .pagina-manual .manual {
+        margin-top: 12px;
+    }
+
+
+    .capa-icone svg {
+        width: 28px;
+        height: 28px;
+    }
+
+
+    /* Sumário vira uma fileira que desliza para o lado */
+
+    .manual-sumario {
+        flex-wrap: nowrap;
+
+        overflow-x: auto;
+
+        padding: 14px 0;
+
+        -webkit-overflow-scrolling: touch;
+
+        scrollbar-width: none;
+    }
+
+    .manual-sumario::-webkit-scrollbar {
+        display: none;
+    }
+
+    .pagina-manual .sumario-link {
+        flex-shrink: 0;
+    }
+
+    .sumario-rotulo {
+        display: none;
+    }
+
+
+    .manual-conteudo {
+        padding: 0 0 24px;
+    }
+
+
+
+
+
+    .manual-secao {
+        padding: 32px 0;
+    }
+
+    .pagina-manual .passo {
+        padding: 14px 16px;
+    }
+
+
+    .mini-kanban {
+        gap: 6px;
+    }
+
+    .pagina-manual .mini-coluna {
+        padding: 12px 8px;
+    }
+
+    .mini-coluna-titulo {
+        font-size: 13px;
+    }
+
+
+
+    .pagina-manual .botao-duvidas {
+        width: 100%;
+
+        justify-content: center;
+    }
+}
+
+
+/* Quem prefere menos movimento na tela */
+
+@media (prefers-reduced-motion: reduce) {
+
+    html {
+        scroll-behavior: auto;
+    }
+
+}

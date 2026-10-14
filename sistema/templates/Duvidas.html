@@ -1,0 +1,592 @@
+{% load static %}
+
+<!DOCTYPE html>
+
+<html lang="pt-br">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>StudyPlan | Dúvidas</title>
+
+    <link rel="stylesheet" href="{% static 'PaginaHome/PaginaHome.css' %}?v={% now 'U' %}">
+
+    <link rel="stylesheet" href="{% static 'Duvidas/Duvidas.css' %}?v={% now 'U' %}">
+
+    <link rel="stylesheet" href="{% static 'Duvidas/ChatIA.css' %}?v={% now 'U' %}">
+
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+</head>
+
+<body>
+
+    <div class="conteudo-da-pagina pagina-duvidas">
+
+        <main class="duvidas">
+
+            <!-- =========================
+                 TÍTULO E DICA
+            ========================= -->
+
+            <h1 class="duvidas-titulo">
+                Dúvidas
+            </h1>
+
+            <p class="duvidas-dica">
+                <i data-lucide="hand"></i>
+                Toque em uma pergunta e veja a resposta sobre o CEFET-MG.
+            </p>
+
+
+            <!-- =========================
+                 PERGUNTAS FREQUENTES
+
+                 Para adicionar uma pergunta, copie um bloco
+                 <article class="faq-item"> inteiro e cole abaixo
+                 do último. Troque só a pergunta e a resposta.
+                 Use data-um-por-vez="true" para abrir uma de
+                 cada vez.
+            ========================= -->
+
+            <div class="faq-lista" data-um-por-vez="false">
+
+
+                <!-- 1. SEGUNDA CHAMADA -->
+
+                <article class="faq-item">
+
+                    <h2 class="faq-titulo">
+                        <button type="button" class="faq-pergunta" aria-expanded="false">
+                            <span class="faq-texto">Como funciona o processo de Segunda Chamada?</span>
+                            <span class="faq-seta"><i data-lucide="chevron-down"></i></span>
+                        </button>
+                    </h2>
+
+                    <div class="faq-resposta">
+                        <div class="faq-resposta-interna">
+                            <div class="faq-resposta-conteudo">
+
+                                <p>
+                                    Caso você, aluno do curso técnico, tenha perdido alguma avaliação, para ter
+                                    direito à Segunda Chamada é necessário preencher o requerimento de
+                                    <strong>Solicitação de Segunda Chamada</strong>, disponível no
+                                    <strong>Registro Escolar</strong>, anexando documento ou justificativa que
+                                    comprove a ausência.
+                                </p>
+
+                                <div class="faq-norma">
+
+                                    <p>
+                                        Segundo as Normas Acadêmicas da EPTNM (Educação Profissional Técnica de
+                                        Nível Médio):
+                                    </p>
+
+                                    <p>
+                                        <strong>Art. 77</strong> – Terá direito à Avaliação Formativa ou Somativa
+                                        em segunda chamada o aluno ausente à primeira chamada devido a:
+                                    </p>
+
+                                    <ol type="I">
+                                        <li>motivo de doença ou licença médica;</li>
+                                        <li>motivo de trabalho no horário da avaliação;</li>
+                                        <li>motivo de falecimento de familiares em primeiro e segundo graus;</li>
+                                        <li>obrigações com o Serviço Militar;</li>
+                                        <li>obrigações com o Poder Judiciário;</li>
+                                        <li>motivo de participação em órgãos colegiados e atividades extraclasses institucionais.</li>
+                                    </ol>
+
+                                </div>
+
+                                <p>
+                                    Veja a seguir os links para requerimento de Segunda Chamada para cada curso do
+                                    Campus Varginha:
+                                </p>
+
+                                <!-- COLOQUE o endereço de cada requerimento no href="#" abaixo -->
+                                <ul>
+                                    <li><strong>INFORMÁTICA:</strong> <a href="#" target="_blank" rel="noopener">Abrir requerimento</a></li>
+                                    <li><strong>MECATRÔNICA:</strong> <a href="#" target="_blank" rel="noopener">Abrir requerimento</a></li>
+                                    <li><strong>EDIFICAÇÕES:</strong> <a href="#" target="_blank" rel="noopener">Abrir requerimento</a></li>
+                                </ul>
+
+                            </div>
+                        </div>
+                    </div>
+
+                </article>
+
+
+                <!-- 2. CÁLCULO DA RECUPERAÇÃO -->
+
+                <article class="faq-item">
+
+                    <h2 class="faq-titulo">
+                        <button type="button" class="faq-pergunta" aria-expanded="false">
+                            <span class="faq-texto">Como funciona o cálculo final para determinar minha nota na recuperação?</span>
+                            <span class="faq-seta"><i data-lucide="chevron-down"></i></span>
+                        </button>
+                    </h2>
+
+                    <div class="faq-resposta">
+                        <div class="faq-resposta-interna">
+                            <div class="faq-resposta-conteudo">
+
+                                <p>
+                                    Após os estudos de recuperação, a <strong>Nota Final (NF)</strong> será
+                                    calculada através da média ponderada:
+                                </p>
+
+                                <p class="faq-formula">NF = (NA + 2 · NR) / 3</p>
+
+                                <p>No qual:</p>
+
+                                <ul>
+                                    <li>
+                                        <strong>Nota de Aproveitamento (NA):</strong> Representa o somatório das
+                                        notas obtidas na disciplina pelo aluno no período letivo.
+                                    </li>
+                                    <li>
+                                        <strong>Nota obtida na Recuperação (NR):</strong> Representa o somatório
+                                        das notas obtidas na disciplina pelo aluno nos Estudos de Recuperação Final.
+                                    </li>
+                                    <li>
+                                        <strong>Nota Final (NF):</strong> Expressa a apuração do rendimento escolar
+                                        final do aluno na série ou no módulo.
+                                    </li>
+                                </ul>
+
+                                <p>
+                                    Será considerado aprovado na disciplina o aluno que obtiver Nota Final (NF)
+                                    igual ou superior a <strong>60 (sessenta) pontos</strong>.
+                                </p>
+
+                            </div>
+                        </div>
+                    </div>
+
+                </article>
+
+
+                <!-- 3. FREQUÊNCIA -->
+
+                <article class="faq-item">
+
+                    <h2 class="faq-titulo">
+                        <button type="button" class="faq-pergunta" aria-expanded="false">
+                            <span class="faq-texto">Qual é a frequência mínima de um aluno na instituição? E a máxima?</span>
+                            <span class="faq-seta"><i data-lucide="chevron-down"></i></span>
+                        </button>
+                    </h2>
+
+                    <div class="faq-resposta">
+                        <div class="faq-resposta-interna">
+                            <div class="faq-resposta-conteudo">
+
+                                <p>
+                                    O aluno da EPTNM (Educação Profissional Técnica de Nível Médio) deve ter
+                                    frequência igual ou superior a <strong>75% (setenta e cinco por cento)</strong>
+                                    da carga horária total efetivamente ministrada na série ou no módulo.
+                                </p>
+
+                                <p>
+                                    A frequência máxima, por sua vez, se expressa pelo limite de
+                                    <strong>25% (vinte e cinco por cento)</strong> da carga horária ministrada na
+                                    série. Entretanto, o limite de faltas previsto nas Normas Acadêmicas deve ser
+                                    utilizado pelo aluno com cautela, porque as ausências, justificadas ou não, bem
+                                    como as ausências por eventuais problemas de saúde são computadas no limite de
+                                    25%.
+                                </p>
+
+                            </div>
+                        </div>
+                    </div>
+
+                </article>
+
+
+                <!-- 4. ESTÁGIO -->
+
+                <article class="faq-item">
+
+                    <h2 class="faq-titulo">
+                        <button type="button" class="faq-pergunta" aria-expanded="false">
+                            <span class="faq-texto">Preciso cumprir em sua totalidade as horas previstas para o Estágio Curricular Obrigatório para, enfim, conseguir formação no Ensino Técnico?</span>
+                            <span class="faq-seta"><i data-lucide="chevron-down"></i></span>
+                        </button>
+                    </h2>
+
+                    <div class="faq-resposta">
+                        <div class="faq-resposta-interna">
+                            <div class="faq-resposta-conteudo">
+
+                                <p>
+                                    <strong>Sim.</strong> Esse Estágio Curricular Obrigatório é um ato educativo
+                                    escolar supervisionado, desenvolvido no ambiente de trabalho, que visa à
+                                    preparação dos alunos de cursos da EPTNM para o trabalho produtivo e pode ser
+                                    abatido por meio de duas formas:
+                                </p>
+
+                                <ul>
+                                    <li>Desenvolvimento de uma iniciação científica dentro do Campus.</li>
+                                    <li>Programa de estágio em empresas.</li>
+                                </ul>
+
+                                <p>
+                                    Para informações mais precisas, recomenda-se a busca do
+                                    <strong>Departamento de Estágio</strong> presente no seu Campus.
+                                </p>
+
+                            </div>
+                        </div>
+                    </div>
+
+                </article>
+
+
+                <!-- 5. CALENDÁRIO LETIVO -->
+
+                <article class="faq-item">
+
+                    <h2 class="faq-titulo">
+                        <button type="button" class="faq-pergunta" aria-expanded="false">
+                            <span class="faq-texto">Onde é possível encontrar o calendário letivo da universidade?</span>
+                            <span class="faq-seta"><i data-lucide="chevron-down"></i></span>
+                        </button>
+                    </h2>
+
+                    <div class="faq-resposta">
+                        <div class="faq-resposta-interna">
+                            <div class="faq-resposta-conteudo">
+
+                                <p>
+                                    Por meio dos links abaixo, você consegue acessá-los para entender melhor sobre
+                                    o planejamento letivo dos ensinos da modalidade TÉCNICA:
+                                </p>
+
+                                <ul>
+                                    <li>
+                                        <strong>Ensino INTEGRADO:</strong>
+                                        <a href="https://www.varginha.cefetmg.br/wp-content/uploads/sites/11/2026/03/VARGINHA_Calendario-Escolar-2026-EPTNM_INT_12032026.pdf" target="_blank" rel="noopener">Abrir calendário (PDF)</a>
+                                    </li>
+                                    <li>
+                                        <strong>Ensino SUBSEQUENTE:</strong>
+                                        <a href="https://www.varginha.cefetmg.br/wp-content/uploads/sites/11/2026/03/VARGINHA_Calendario-Escolar-2026-EPTNM_SUB_12032026.pdf" target="_blank" rel="noopener">Abrir calendário (PDF)</a>
+                                    </li>
+                                    <li>
+                                        <strong>Sábados Letivos:</strong>
+                                        <a href="https://www.varginha.cefetmg.br/wp-content/uploads/sites/11/2026/07/SABADOS-LETIVOS-2026_DIVULGACAO-1.pdf" target="_blank" rel="noopener">Abrir lista (PDF)</a>
+                                    </li>
+                                </ul>
+
+                            </div>
+                        </div>
+                    </div>
+
+                </article>
+
+
+                <!-- 6. BOLSAS -->
+
+                <article class="faq-item">
+
+                    <h2 class="faq-titulo">
+                        <button type="button" class="faq-pergunta" aria-expanded="false">
+                            <span class="faq-texto">Como funciona o sistema de bolsas oferecidas pelo Campus? Quais são elas?</span>
+                            <span class="faq-seta"><i data-lucide="chevron-down"></i></span>
+                        </button>
+                    </h2>
+
+                    <div class="faq-resposta">
+                        <div class="faq-resposta-interna">
+                            <div class="faq-resposta-conteudo">
+
+                                <p>
+                                    O CEFET-MG oferece programas de assistência estudantil que buscam contribuir
+                                    para a permanência dos alunos na instituição, auxiliar aqueles que enfrentam
+                                    dificuldades financeiras e incentivar o desenvolvimento acadêmico. Entre os
+                                    principais programas estão:
+                                </p>
+
+                                <ul>
+                                    <li>
+                                        <strong>Programa de Auxílio à Participação de Discentes em Eventos:</strong>
+                                        oferece auxílio financeiro para despesas relacionadas à participação em
+                                        eventos técnico-científicos, competições acadêmicas, atividades esportivas
+                                        e culturais. O benefício depende da análise da solicitação e da
+                                        disponibilidade orçamentária.
+                                    </li>
+                                    <li>
+                                        <strong>Programa de Alimentação/Restaurante:</strong> busca contribuir para
+                                        a permanência dos estudantes por meio do Restaurante Estudantil. Nos campi
+                                        sem restaurante próprio ou externo, é oferecida a Bolsa Alimentação.
+                                    </li>
+                                    <li>
+                                        <strong>Programa Bolsa Permanência:</strong> destinado aos estudantes que
+                                        enfrentam dificuldades financeiras para custear suas despesas pessoais, o
+                                        que poderia comprometer a continuidade dos estudos. O auxílio é pago
+                                        mensalmente, conforme o número de dias letivos de cada mês.
+                                    </li>
+                                    <li>
+                                        <strong>Programa Bolsa de Complementação Educacional:</strong> destinado aos
+                                        estudantes que precisam de auxílio financeiro e desejam complementar sua
+                                        aprendizagem por meio de atividades e projetos relacionados ao curso. O
+                                        bolsista deve ter disponibilidade para atuar 20 horas semanais.
+                                    </li>
+                                    <li>
+                                        <strong>Programa Bolsa Emergencial:</strong> destinado aos estudantes que
+                                        enfrentam uma crise financeira temporária que pode prejudicar seu
+                                        aproveitamento escolar. Caso a necessidade de auxílio continue, o estudante
+                                        deverá solicitar a Bolsa Permanência.
+                                    </li>
+                                </ul>
+
+                                <p>
+                                    Além desses programas, a instituição oferece acompanhamento psicossocial,
+                                    acompanhamento pedagógico e monitoria, que são formas de apoio aos estudantes,
+                                    embora não sejam bolsas financeiras.
+                                </p>
+
+                                <p>
+                                    Para obter informações sobre os programas e suas solicitações, o aluno deve
+                                    procurar a <strong>Coordenação de Desenvolvimento Estudantil (CDE)</strong> do
+                                    Campus Varginha.
+                                </p>
+
+                            </div>
+                        </div>
+                    </div>
+
+                </article>
+
+
+                <!-- 7. META -->
+
+                <article class="faq-item">
+
+                    <h2 class="faq-titulo">
+                        <button type="button" class="faq-pergunta" aria-expanded="false">
+                            <span class="faq-texto">O que é a Meta e como ela tem funcionamento na universidade de Varginha?</span>
+                            <span class="faq-seta"><i data-lucide="chevron-down"></i></span>
+                        </button>
+                    </h2>
+
+                    <div class="faq-resposta">
+                        <div class="faq-resposta-interna">
+                            <div class="faq-resposta-conteudo">
+
+                                <p>
+                                    A <strong>META (Mostra Específica de Trabalhos e Aplicações)</strong> é um
+                                    evento de caráter científico e tecnológico promovido pelo CEFET-MG desde 1978.
+                                    Seu objetivo é divulgar, para as comunidades interna e externa, os trabalhos
+                                    desenvolvidos por alunos e ex-alunos da instituição.
+                                </p>
+
+                                <p>
+                                    O evento incentiva os estudantes a desenvolver projetos, adquirir autonomia e
+                                    propor soluções para problemas científicos, tecnológicos, ambientais e sociais.
+                                </p>
+
+                                <p>
+                                    Além disso, estimula a participação de alunos de diferentes cursos e
+                                    instituições de ensino, incentiva a divulgação de pesquisas e atividades
+                                    acadêmicas e promove o intercâmbio de conhecimentos entre estudantes,
+                                    professores, técnicos administrativos, empresas e a comunidade.
+                                </p>
+
+                                <p>
+                                    A META também busca incentivar a apresentação de trabalhos em outras feiras
+                                    científicas e tecnológicas, como a FEBRACE (Feira Brasileira de Ciências e
+                                    Engenharia).
+                                </p>
+
+                                <div class="faq-aviso">
+                                    <strong>OBS:</strong> A participação ativa de alunos no evento, seja na
+                                    apresentação de trabalhos e/ou assistindo projetos, é indispensável.
+                                </div>
+
+                                <p>
+                                    Para conhecer mais sobre o evento, acesse o site oficial:
+                                    <a href="https://www.meta.cefetmg.br/" target="_blank" rel="noopener">https://www.meta.cefetmg.br/</a>
+                                </p>
+
+                            </div>
+                        </div>
+                    </div>
+
+                </article>
+
+            </div>
+
+
+            <!-- =========================
+                 NÃO ENCONTROU A RESPOSTA?
+            ========================= -->
+
+            <div class="duvidas-suporte">
+
+                <div class="suporte-info">
+
+                    <div class="suporte-icone">
+                        <i data-lucide="bot"></i>
+                    </div>
+
+                    <div>
+
+                        <p class="suporte-titulo">
+                            Não encontrou as respostas que procurava?
+                        </p>
+
+                        <p class="suporte-texto">
+                            Use nossa inteligência suporte para sanar suas dúvidas.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+            </div>
+
+        </main>
+
+    </div>
+
+    <!-- =========================
+         IA DE SUPORTE (botão da raposa + janela do chat)
+    ========================= -->
+
+    <button
+        id="ia-abrir"
+        class="ia-botao-flutuante"
+        type="button"
+        aria-label="Abrir o chat do StudyPlan IA"
+        aria-expanded="false"
+        aria-controls="ia-janela"
+    >
+        <img src="{% static 'Duvidas/raposa_studyplan.png' %}" alt="">
+        <span class="ia-ponto-online"></span>
+    </button>
+
+
+    <section
+        id="ia-janela"
+        class="ia-janela"
+        role="dialog"
+        aria-label="StudyPlan IA"
+        aria-hidden="true"
+    >
+
+        <div class="ia-cabecalho">
+
+            <div class="ia-avatar">
+                <img src="{% static 'Duvidas/raposa_studyplan.png' %}" alt="">
+            </div>
+
+            <div class="ia-info">
+
+                <p class="ia-titulo">Inteligência Suporte</p>
+
+                <p class="ia-status">
+                    <span class="ia-ponto"></span>
+                    Online para estudar
+                </p>
+
+            </div>
+
+            <button id="ia-fechar" class="ia-fechar" type="button" aria-label="Fechar o chat">
+                <i data-lucide="x"></i>
+            </button>
+
+        </div>
+
+
+        <div id="ia-mensagens" class="ia-mensagens" aria-live="polite">
+
+            <div class="ia-mensagem da-ia">
+
+                <div class="ia-mensagem-avatar">
+                    <img src="{% static 'Duvidas/raposa_studyplan.png' %}" alt="">
+                </div>
+
+                <div class="ia-mensagem-corpo">
+
+                    <div class="ia-mensagem-nome">Inteligência Suporte</div>
+
+                    <div class="ia-balao">Olá! Sou o assistente virtual do StudyPlan. Me pergunte sobre as normas e orientações do CEFET-MG, como frequência, recuperação, regime disciplinar, e sanarei todas as suas dúvidas.</div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="ia-entrada">
+
+            <div class="ia-campo">
+
+                <textarea
+                    id="ia-pergunta"
+                    rows="1"
+                    maxlength="500"
+                    placeholder="Digite sua pergunta..."
+                    aria-label="Digite sua pergunta"
+                ></textarea>
+
+                <button id="ia-enviar" class="ia-enviar" type="button" aria-label="Enviar pergunta">
+                    <i data-lucide="send"></i>
+                </button>
+
+            </div>
+
+            <p class="ia-aviso">
+                A IA responde com base nos documentos do CEFET-MG. Confirme informações importantes na secretaria.
+            </p>
+
+        </div>
+
+    </section>
+
+
+
+    <script>
+
+        const nomeUsuario = "{{ user.username }}";
+
+        const cursoUsuario = "{% if user.curso %}{{ user.curso.nome }}{% else %}Não informado{% endif %}";
+
+        const urlHome = "{% url 'home' %}";
+
+        const urlPerfil = "{% url 'perfil' %}";
+
+        const urlTarefas = "{% url 'tarefas' %}";
+
+        const urlDuvidas = "{% url 'duvidas' %}";
+
+        const urlEstatisticas = "{% url 'estatisticas' %}";
+
+        const urlManual = "{% url 'manual' %}";
+
+        // Chat da IA de suporte
+        const urlPerguntarIA = "{% url 'suporte_perguntar' %}";
+
+        const csrfTokenIA = "{{ csrf_token }}";
+
+        const imagemRaposaIA = "{% static 'Duvidas/raposa_studyplan.png' %}";
+
+    </script>
+
+
+    <script src="{% static 'PaginaHome/menu.js' %}?v={% now 'U' %}"></script>
+
+    <script src="{% static 'Duvidas/Duvidas.js' %}?v={% now 'U' %}"></script>
+
+    <script src="{% static 'Duvidas/ChatIA.js' %}?v={% now 'U' %}"></script>
+
+</body>
+
+</html>

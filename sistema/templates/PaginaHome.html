@@ -1,0 +1,419 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>StudyPlan | Suas Notas</title>
+
+    <link rel="stylesheet" href="{% static 'PaginaHome/PaginaHome.css' %}?v={% now 'U' %}">
+
+    <!-- Estilo da tela de notas (tabela, cores das disciplinas e das notas) -->
+    <link rel="stylesheet" href="{% static 'PaginaHome/EstiloNotas.css' %}?v={% now 'U' %}">
+
+    <!-- CRUD de notas -->
+    <link rel="stylesheet" href="{% static 'PaginaHome/CrudNotas.css' %}?v={% now 'U' %}">
+
+    <!-- Versão fixa do Lucide, para uma atualização da biblioteca não quebrar os ícones -->
+    <script src="https://unpkg.com/lucide@0.453.0/dist/umd/lucide.min.js"></script>
+
+</head>
+
+<body>
+
+    <div class="conteudo-da-pagina">
+
+        <h1>
+            Gerenciamento de notas
+        </h1>
+
+        {% if tabela %}
+
+        <p class="dica-tabela">
+            <i data-lucide="hand"></i>
+            Toque numa nota para adicionar, editar ou excluir atividades.
+        </p>
+
+        <div class="tabela-container">
+
+            <table class="tabela-notas">
+
+                <thead>
+
+                    <tr>
+                        <th scope="col">Disciplina</th>
+                        <th scope="col">Bimestre 1</th>
+                        <th scope="col">Bimestre 2</th>
+                        <th scope="col">Bimestre 3</th>
+                        <th scope="col">Bimestre 4</th>
+                        <th scope="col">Total</th>
+                        <th scope="col">Quanto falta para 60</th>
+                    </tr>
+
+                </thead>
+
+                <tbody>
+
+                    {% for disciplina in tabela %}
+
+                    <tr>
+
+                        <td>
+                            {{ disciplina.nome }}
+                        </td>
+
+
+                        <!-- BIMESTRE 1 -->
+
+                        <td
+                            class="celula-bimestre"
+                            tabindex="0"
+                            data-disciplina="{{ disciplina.id }}"
+                            data-nome="{{ disciplina.nome }}"
+                            data-bimestre="1"
+                            title="Toque para ver as notas"
+                        >
+                            <span class="{% if disciplina.bim1 is None or disciplina.bim1|floatformat:"-2" == "0" %}nota-vazia{% elif disciplina.bim1 < 12 %}nota-baixa{% else %}nota-ok{% endif %}">
+                                {{ disciplina.bim1 }}
+                            </span>
+                        </td>
+
+
+                        <!-- BIMESTRE 2 -->
+
+                        <td
+                            class="celula-bimestre"
+                            tabindex="0"
+                            data-disciplina="{{ disciplina.id }}"
+                            data-nome="{{ disciplina.nome }}"
+                            data-bimestre="2"
+                            title="Toque para ver as notas"
+                        >
+                            <span class="{% if disciplina.bim2 is None or disciplina.bim2|floatformat:"-2" == "0" %}nota-vazia{% elif disciplina.bim2 < 18 %}nota-baixa{% else %}nota-ok{% endif %}">
+                                {{ disciplina.bim2 }}
+                            </span>
+                        </td>
+
+
+                        <!-- BIMESTRE 3 -->
+
+                        <td
+                            class="celula-bimestre"
+                            tabindex="0"
+                            data-disciplina="{{ disciplina.id }}"
+                            data-nome="{{ disciplina.nome }}"
+                            data-bimestre="3"
+                            title="Toque para ver as notas"
+                        >
+                            <span class="{% if disciplina.bim3 is None or disciplina.bim3|floatformat:"-2" == "0" %}nota-vazia{% elif disciplina.bim3 < 12 %}nota-baixa{% else %}nota-ok{% endif %}">
+                                {{ disciplina.bim3 }}
+                            </span>
+                        </td>
+
+
+                        <!-- BIMESTRE 4 -->
+
+                        <td
+                            class="celula-bimestre"
+                            tabindex="0"
+                            data-disciplina="{{ disciplina.id }}"
+                            data-nome="{{ disciplina.nome }}"
+                            data-bimestre="4"
+                            title="Toque para ver as notas"
+                        >
+                            <span class="{% if disciplina.bim4 is None or disciplina.bim4|floatformat:"-2" == "0" %}nota-vazia{% elif disciplina.bim4 < 18 %}nota-baixa{% else %}nota-ok{% endif %}">
+                                {{ disciplina.bim4 }}
+                            </span>
+                        </td>
+
+
+                        <!-- TOTAL -->
+
+                        <td class="total">
+                            {{ disciplina.total }}
+                        </td>
+
+
+                        <!-- QUANTO FALTA -->
+
+                        <td class="falta">
+                            {{ disciplina.falta }}
+                        </td>
+
+                    </tr>
+
+                    {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+        {% else %}
+
+        <div class="sem-disciplinas">
+
+            <i data-lucide="graduation-cap"></i>
+
+            <p class="sem-disciplinas-titulo">
+                Nenhuma disciplina cadastrada.
+            </p>
+
+            <p class="sem-disciplinas-texto">
+                Adicione disciplinas para começar a gerenciar suas notas.
+            </p>
+
+        </div>
+
+        {% endif %}
+
+    </div>
+
+
+    <!-- =========================
+         JANELA DE NOTAS (CRUD)
+    ========================= -->
+
+    <div id="janela-notas-fundo" class="janela-notas-fundo">
+
+        <div
+            class="janela-notas"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="janela-notas-titulo"
+        >
+
+            <div class="janela-notas-topo">
+
+                <div class="janela-notas-icone">
+                    <i data-lucide="notebook-pen"></i>
+                </div>
+
+                <div>
+
+                    <h2 id="janela-notas-titulo" class="janela-notas-titulo">
+                        Notas do bimestre
+                    </h2>
+
+                    <p id="janela-notas-subtitulo" class="janela-notas-subtitulo"></p>
+
+                </div>
+
+                <button
+                    type="button"
+                    class="botao-fechar-janela"
+                    aria-label="Fechar"
+                    onclick="fecharJanelaNotas()"
+                >
+                    <i data-lucide="x"></i>
+                </button>
+
+            </div>
+
+
+            <div class="janela-notas-corpo">
+
+                <div class="resumo-bimestre">
+
+                    <div class="resumo-linha">
+
+                        <div class="resumo-numeros">
+
+                            <span id="resumo-total" class="resumo-total">0</span>
+
+                            <span id="resumo-maximo" class="resumo-maximo"></span>
+
+                        </div>
+
+                        <span
+                            id="resumo-situacao"
+                            class="resumo-situacao vazio"
+                        ></span>
+
+                    </div>
+
+                    <div class="resumo-barra">
+
+                        <div
+                            id="resumo-barra-preenchida"
+                            class="resumo-barra-preenchida"
+                        ></div>
+
+                        <span
+                            class="resumo-marca-media"
+                            title="Média (60%)"
+                        ></span>
+
+                    </div>
+
+                    <p id="resumo-legenda" class="resumo-legenda"></p>
+
+                </div>
+
+
+                <div>
+
+                    <h3 class="lista-titulo">
+                        Atividades lançadas
+                    </h3>
+
+                    <div
+                        id="lista-atividades"
+                        class="lista-atividades"
+                    ></div>
+
+                </div>
+
+
+                <form
+                    id="form-notas"
+                    class="form-notas"
+                    novalidate
+                >
+
+                    {% csrf_token %}
+
+                    <h3
+                        id="form-notas-titulo"
+                        class="form-notas-titulo"
+                    >
+                        Nova atividade
+                    </h3>
+
+                    <div class="form-notas-campos">
+
+                        <div>
+
+                            <label for="nota-nome">
+                                Nome da atividade
+                            </label>
+
+                            <input
+                                type="text"
+                                id="nota-nome"
+                                maxlength="100"
+                                placeholder="Ex.: Prova 1"
+                                autocomplete="off"
+                            >
+
+                        </div>
+
+                        <div>
+
+                            <label for="nota-valor">
+                                Nota (pts)
+                            </label>
+
+                            <input
+                                type="number"
+                                id="nota-valor"
+                                min="0"
+                                step="0.01"
+                                inputmode="decimal"
+                                placeholder="Ex.: 8"
+                            >
+
+                        </div>
+
+                    </div>
+
+                    <p
+                        id="form-notas-aviso"
+                        class="form-notas-aviso"
+                        role="alert"
+                    ></p>
+
+                    <div class="form-notas-botoes">
+
+                        <button
+                            type="button"
+                            id="botao-cancelar-edicao"
+                            class="botao-secundario"
+                            onclick="cancelarEdicao()"
+                            hidden
+                        >
+                            Cancelar edição
+                        </button>
+
+                        <button
+                            type="submit"
+                            id="botao-salvar-nota"
+                            class="botao-principal"
+                        >
+                            Adicionar
+                        </button>
+
+                    </div>
+
+                </form>
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <script>
+
+        const nomeUsuario =
+            "{{ user.username }}";
+
+
+        const cursoUsuario =
+            "{% if user.curso %}{{ user.curso.nome }}{% else %}Não informado{% endif %}";
+
+
+        const urlHome =
+            "{% url 'home' %}";
+
+
+        const urlPerfil =
+            "{% url 'perfil' %}";
+
+
+        const urlTarefas =
+            "{% url 'tarefas' %}";
+
+
+        const urlDuvidas =
+            "{% url 'duvidas' %}";
+
+
+        const urlEstatisticas =
+            "{% url 'estatisticas' %}";
+
+
+        const urlManual =
+            "{% url 'manual' %}";
+
+
+        const urlListarAtividades =
+            "{% url 'listar_atividades' %}";
+
+
+        const urlCriarAtividade =
+            "{% url 'criar_atividade' %}";
+
+
+        const urlEditarAtividade =
+            "{% url 'editar_atividade' %}";
+
+
+        const urlExcluirAtividade =
+            "{% url 'excluir_atividade' %}";
+    </script>
+
+
+    <script src="{% static 'PaginaHome/menu.js' %}?v={% now 'U' %}"></script>
+
+    <script src="{% static 'PaginaHome/CrudNotas.js' %}?v={% now 'U' %}"></script>
+
+</body>
+
+</html>

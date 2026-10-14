@@ -1,0 +1,501 @@
+{% load static %}
+
+<!DOCTYPE html>
+
+<html lang="pt-br">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>StudyPlan | Manual de Uso</title>
+
+    <link rel="stylesheet" href="{% static 'PaginaHome/PaginaHome.css' %}?v={% now 'U' %}">
+
+    <link rel="stylesheet" href="{% static 'Manual/Manual.css' %}?v={% now 'U' %}">
+
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+</head>
+
+<body>
+
+    <div class="conteudo-da-pagina pagina-manual">
+
+        <main class="manual">
+
+            <!-- =========================
+                 CAPA
+            ========================= -->
+
+            <div class="manual-capa">
+
+                <div class="capa-textos">
+
+                    <h2 class="capa-titulo">
+                        Manual de Uso
+                    </h2>
+
+                    <p class="capa-subtitulo">
+                        Tudo o que você precisa para usar o StudyPlan, no site ou no aplicativo.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <!-- =========================
+                 SUMÁRIO
+            ========================= -->
+
+            <nav class="manual-sumario" aria-label="Neste manual">
+
+                <span class="sumario-rotulo">Ir para</span>
+
+                <a class="sumario-link" href="#navegar">
+                    <i data-lucide="menu"></i> Menu
+                </a>
+
+                <a class="sumario-link" href="#notas">
+                    <i data-lucide="table"></i> Minhas notas
+                </a>
+
+                <a class="sumario-link" href="#tarefas">
+                    <i data-lucide="kanban"></i> Tarefas
+                </a>
+
+                <a class="sumario-link" href="#perfil">
+                    <i data-lucide="user"></i> Perfil
+                </a>
+
+                <a class="sumario-link" href="#estatisticas">
+                    <i data-lucide="chart-line"></i> Estatísticas
+                </a>
+
+                <a class="sumario-link" href="#duvidas">
+                    <i data-lucide="circle-help"></i> Dúvidas
+                </a>
+
+            </nav>
+
+
+            <div class="manual-conteudo">
+
+                <!-- =========================
+                     1. COMO NAVEGAR
+                ========================= -->
+
+                <section id="navegar" class="manual-secao">
+
+                    <div class="secao-topo">
+
+                        <div class="secao-icone">
+                            <i data-lucide="menu"></i>
+                        </div>
+
+                        <div>
+                            <h3 class="secao-titulo">Como navegar</h3>
+                            <span class="secao-onde">Botão ☰ no canto de cima</span>
+                        </div>
+
+                    </div>
+
+                    <p>
+                        Toque no botão <strong>☰</strong> no canto superior esquerdo para abrir o menu.
+                        Lá estão todas as páginas: <strong>Minhas notas</strong>, <strong>Meu Perfil</strong>,
+                        <strong>Tarefas</strong>, <strong>Dúvidas</strong>, <strong>Estatísticas</strong>
+                        e este <strong>Manual</strong>. A página em que você está fica destacada.
+                    </p>
+
+                    <div class="dica">
+
+                        <i data-lucide="smartphone"></i>
+
+                        <p>
+                            <strong>No celular:</strong> tocar é o mesmo que clicar no computador.
+                        </p>
+
+                    </div>
+
+                </section>
+
+
+                <!-- =========================
+                     2. MINHAS NOTAS
+                ========================= -->
+
+                <section id="notas" class="manual-secao">
+
+                    <div class="secao-topo">
+
+                        <div class="secao-icone">
+                            <i data-lucide="table"></i>
+                        </div>
+
+                        <div>
+                            <h3 class="secao-titulo">Minhas notas</h3>
+                            <span class="secao-onde">Página inicial</span>
+                        </div>
+
+                    </div>
+
+                    <p>
+                        A página inicial mostra uma tabela com as suas disciplinas e a soma das notas de
+                        cada bimestre. No CEFET, o ano vale <strong>100 pontos</strong>, divididos assim:
+                    </p>
+
+                    <div class="pontuacao">
+
+                        <div class="pontuacao-item">
+                            <span class="pontuacao-bimestre">1º bimestre</span>
+                            <span class="pontuacao-valor">20</span>
+                            <span class="pontuacao-media">média 12</span>
+                        </div>
+
+                        <div class="pontuacao-item">
+                            <span class="pontuacao-bimestre">2º bimestre</span>
+                            <span class="pontuacao-valor">30</span>
+                            <span class="pontuacao-media">média 18</span>
+                        </div>
+
+                        <div class="pontuacao-item">
+                            <span class="pontuacao-bimestre">3º bimestre</span>
+                            <span class="pontuacao-valor">20</span>
+                            <span class="pontuacao-media">média 12</span>
+                        </div>
+
+                        <div class="pontuacao-item">
+                            <span class="pontuacao-bimestre">4º bimestre</span>
+                            <span class="pontuacao-valor">30</span>
+                            <span class="pontuacao-media">média 18</span>
+                        </div>
+
+                        <div class="pontuacao-item meta">
+                            <span class="pontuacao-bimestre">Meta do ano</span>
+                            <span class="pontuacao-valor">60</span>
+                            <span class="pontuacao-media">para passar</span>
+                        </div>
+
+                    </div>
+
+                    <ol class="passos">
+
+                        <li class="passo">
+                            <span class="passo-numero">1</span>
+                            <div>
+                                <span class="passo-titulo">Toque na nota de um bimestre</span>
+                                <p class="passo-texto">
+                                    Abre a janela <strong>Notas do bimestre</strong>, com as atividades que
+                                    você já lançou e quanto falta para a média.
+                                </p>
+                            </div>
+                        </li>
+
+                        <li class="passo">
+                            <span class="passo-numero">2</span>
+                            <div>
+                                <span class="passo-titulo">Adicione uma atividade</span>
+                                <p class="passo-texto">
+                                    Escreva o nome (ex.: Prova 1) e a nota que você tirou, depois toque em
+                                    <strong>Adicionar</strong>. A tabela atualiza na hora.
+                                </p>
+                            </div>
+                        </li>
+
+                        <li class="passo">
+                            <span class="passo-numero">3</span>
+                            <div>
+                                <span class="passo-titulo">Edite ou exclua</span>
+                                <p class="passo-texto">
+                                    Toque no lápis <span class="icone-no-texto"><i data-lucide="pencil"></i></span>
+                                    para corrigir uma atividade. Para apagar, toque na lixeira
+                                    <span class="icone-no-texto"><i data-lucide="trash-2"></i></span>
+                                    e depois em <strong>Excluir?</strong> para confirmar.
+                                </p>
+                            </div>
+                        </li>
+
+                    </ol>
+
+                    <p>
+                        A coluna <strong>Total</strong> soma os quatro bimestres, e
+                        <strong>Quanto falta para 60</strong> mostra quantos pontos ainda faltam para passar.
+                        Na janela de notas, a etiqueta mostra como está o bimestre:
+                    </p>
+
+                    <div class="etiquetas">
+
+                        <span class="etiqueta azul">
+                            <i data-lucide="check"></i> Na média
+                        </span>
+
+                        <span class="etiqueta laranja">
+                            <i data-lucide="trending-up"></i> Faltam pontos para a média
+                        </span>
+
+                    </div>
+
+                </section>
+
+
+                <!-- =========================
+                     3. TAREFAS (KANBAN)
+                ========================= -->
+
+                <section id="tarefas" class="manual-secao">
+
+                    <div class="secao-topo">
+
+                        <div class="secao-icone">
+                            <i data-lucide="kanban"></i>
+                        </div>
+
+                        <div>
+                            <h3 class="secao-titulo">Tarefas</h3>
+                            <span class="secao-onde">Menu ☰ › Tarefas</span>
+                        </div>
+
+                    </div>
+
+                    <p>
+                        Um quadro com três colunas para organizar o que você precisa estudar ou entregar.
+                        Cada tarefa anda da esquerda para a direita:
+                    </p>
+
+                    <div class="mini-kanban" aria-hidden="true">
+
+                        <div class="mini-coluna afazer">
+                            <span class="mini-coluna-titulo">A fazer</span>
+                            <div class="mini-cartao"></div>
+                            <div class="mini-cartao"></div>
+                        </div>
+
+                        <div class="mini-coluna fazendo">
+                            <span class="mini-coluna-titulo">Fazendo</span>
+                            <div class="mini-cartao"></div>
+                        </div>
+
+                        <div class="mini-coluna concluido">
+                            <span class="mini-coluna-titulo">Concluído</span>
+                            <div class="mini-cartao"></div>
+                            <div class="mini-cartao"></div>
+                            <div class="mini-cartao"></div>
+                        </div>
+
+                    </div>
+
+                    <ol class="passos">
+
+                        <li class="passo">
+                            <span class="passo-numero">1</span>
+                            <div>
+                                <span class="passo-titulo">Crie uma tarefa</span>
+                                <p class="passo-texto">
+                                    Toque em <strong>Nova tarefa</strong> (ou no <strong>+</strong> de uma
+                                    coluna), escreva o que precisa ser feito e escolha a data limite.
+                                </p>
+                            </div>
+                        </li>
+
+                        <li class="passo">
+                            <span class="passo-numero">2</span>
+                            <div>
+                                <span class="passo-titulo">Mova conforme avança</span>
+                                <p class="passo-texto">
+                                    Use <strong>Começar</strong>, <strong>Concluir</strong>,
+                                    <strong>Voltar</strong> e <strong>Reabrir</strong> para trocar a tarefa
+                                    de coluna. A barra no topo mostra quantas você já concluiu.
+                                </p>
+                            </div>
+                        </li>
+
+                        <li class="passo">
+                            <span class="passo-numero">3</span>
+                            <div>
+                                <span class="passo-titulo">Edite ou exclua</span>
+                                <p class="passo-texto">
+                                    O lápis <span class="icone-no-texto"><i data-lucide="pencil"></i></span>
+                                    muda o nome, a data ou a coluna. A lixeira
+                                    <span class="icone-no-texto"><i data-lucide="trash-2"></i></span>
+                                    apaga (toque de novo em <strong>Excluir?</strong> para confirmar).
+                                </p>
+                            </div>
+                        </li>
+
+                    </ol>
+
+                    <p>
+                        As etiquetas de data avisam o que está perto de vencer:
+                    </p>
+
+                    <div class="etiquetas">
+
+                        <span class="etiqueta vermelha">
+                            <i data-lucide="alarm-clock"></i> Atrasada
+                        </span>
+
+                        <span class="etiqueta laranja">
+                            <i data-lucide="calendar"></i> Entrega hoje / amanhã
+                        </span>
+
+                        <span class="etiqueta cinza">
+                            <i data-lucide="calendar"></i> Até 03/10
+                        </span>
+
+                        <span class="etiqueta azul">
+                            <i data-lucide="circle-check"></i> Concluída
+                        </span>
+
+                    </div>
+
+                    <div class="dica">
+
+                        <i data-lucide="smartphone"></i>
+
+                        <p>
+                            <strong>No celular</strong>, as colunas ficam lado a lado: deslize o dedo para
+                            o lado para ver <strong>Fazendo</strong> e <strong>Concluído</strong>.
+                        </p>
+
+                    </div>
+
+                </section>
+
+
+                <!-- =========================
+                     4. MEU PERFIL
+                ========================= -->
+
+                <section id="perfil" class="manual-secao">
+
+                    <div class="secao-topo">
+
+                        <div class="secao-icone">
+                            <i data-lucide="user"></i>
+                        </div>
+
+                        <div>
+                            <h3 class="secao-titulo">Meu Perfil</h3>
+                            <span class="secao-onde">Menu ☰ › Meu Perfil</span>
+                        </div>
+
+                    </div>
+
+                    <p>
+                        Mostra seu apelido, e-mail e curso. Para mudar, toque em <strong>Editar Perfil</strong>,
+                        altere o apelido ou o e-mail e toque em <strong>Salvar Alterações</strong>.
+                    </p>
+
+                </section>
+
+
+                <!-- =========================
+                     5. ESTATÍSTICAS
+                ========================= -->
+
+                <section id="estatisticas" class="manual-secao">
+
+                    <div class="secao-topo">
+
+                        <div class="secao-icone">
+                            <i data-lucide="chart-line"></i>
+                        </div>
+
+                        <div>
+                            <h3 class="secao-titulo">Estatísticas</h3>
+                            <span class="secao-onde">Menu ☰ › Estatísticas</span>
+                        </div>
+
+                    </div>
+
+                    <p>
+                        Acompanhe o seu desempenho em cada disciplina ao longo dos bimestres e veja
+                        onde precisa de mais atenção.
+                    </p>
+
+                </section>
+
+
+                <!-- =========================
+                     6. DÚVIDAS
+                ========================= -->
+
+                <section id="duvidas" class="manual-secao">
+
+                    <div class="secao-topo">
+
+                        <div class="secao-icone">
+                            <i data-lucide="circle-help"></i>
+                        </div>
+
+                        <div>
+                            <h3 class="secao-titulo">Dúvidas</h3>
+                            <span class="secao-onde">Menu ☰ › Dúvidas</span>
+                        </div>
+
+                    </div>
+
+                    <p>
+                        Reúne um espaço para esclarecer dúvidas escolares, como conteúdos das disciplinas, atividades, provas e questões relacionadas à rotina acadêmica.
+                    </p>
+
+                    <div class="manual-fim">
+
+                        <div>
+                            <p class="fim-titulo">Possui dúvidas sobre o CEFET-MG?</p>
+                            <p class="fim-texto">Veja as perguntas frequentes.</p>
+                        </div>
+
+                        <a class="botao-duvidas" href="{% url 'duvidas' %}">
+                            Ir para Dúvidas
+                            <i data-lucide="arrow-right"></i>
+                        </a>
+
+                    </div>
+
+                </section>
+
+            </div>
+
+        </main>
+
+    </div>
+
+
+    <script>
+
+        const nomeUsuario = "{{ user.username }}";
+
+        const cursoUsuario = "{% if user.curso %}{{ user.curso.nome }}{% else %}Não informado{% endif %}";
+
+        const urlHome = "{% url 'home' %}";
+
+        const urlPerfil = "{% url 'perfil' %}";
+
+        const urlTarefas = "{% url 'tarefas' %}";
+
+        const urlDuvidas = "{% url 'duvidas' %}";
+
+        const urlEstatisticas = "{% url 'estatisticas' %}";
+
+        const urlManual = "{% url 'manual' %}";
+
+    </script>
+
+
+    <script src="{% static 'PaginaHome/menu.js' %}?v={% now 'U' %}"></script>
+
+    <script>
+
+        if (window.lucide) {
+            lucide.createIcons();
+        }
+
+    </script>
+
+</body>
+
+</html>

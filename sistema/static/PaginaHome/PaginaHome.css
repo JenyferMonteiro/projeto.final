@@ -1,0 +1,441 @@
+/* =========================================================
+   PaginaHome.css  -  base compartilhada pelas telas
+   Inclui o estilo do cabeçalho e do menu lateral (no fim).
+   ========================================================= */
+
+* {
+
+    margin: 0;
+
+    padding: 0;
+
+    box-sizing: border-box;
+
+}
+
+body {
+
+    background-color: white;
+
+    font-family: sans-serif;
+
+    overflow-x: hidden;
+
+}
+
+/*
+    Títulos padrão (brancos). As telas já reestilizadas
+    (Notas, Tarefas, Manual, Perfil) definem a própria cor;
+    as demais ainda usam este padrão.
+*/
+
+h1 {
+
+    font-size: 24px;
+    color: white;
+
+}
+
+h2 {
+
+    font-size: 18px;
+
+    font-weight: normal;
+
+    color: white;
+
+}
+
+/* === CENTRALIZA O CONTEÚDO E CONTROLA A ALTURA ===
+   (telas ainda não reestilizadas, como Dúvidas e Estatísticas,
+    continuam usando o fundo laranja daqui) */
+
+.conteudo-da-pagina {
+
+    padding-top: 100px;
+
+    min-height: 100vh;
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+
+    justify-content: center;
+
+    text-align: center;
+
+    background-color: rgba(255, 140, 0, 0.856);
+
+}
+
+
+/* =========================================================
+   CABEÇALHO E MENU LATERAL
+   (montados pelo menu.js: botão "Menu", abas com ícone e
+    o botão "Olá, apelido" que expande o Meu Perfil)
+   ========================================================= */
+
+body header,
+body .Menu,
+body .Menu * {
+    box-sizing: border-box;
+}
+
+
+/* =========================
+   CABEÇALHO
+========================= */
+
+body header {
+    position: fixed;
+    top: 0;
+    left: 0;
+
+    width: 100%;
+    height: 75px;
+
+    padding: 0 20px;
+
+    display: flex;
+    align-items: center;
+    gap: 20px;
+
+    background-color: #223488;
+
+    box-shadow: 0 4px 5px rgba(0, 0, 0, 0.2);
+
+    z-index: 10;
+}
+
+/* Botão laranja: ícone + a palavra "Menu" */
+
+body .but-menu {
+    width: auto;
+    height: 45px;
+
+    padding: 0 18px 0 14px;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+
+    border: none;
+    border-radius: 10px;
+
+    background-color: rgba(255, 140, 0, 0.856);
+
+    color: #ffffff;
+
+    font-family: inherit;
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 1;
+
+    cursor: pointer;
+
+    transition: filter 0.2s, transform 0.2s;
+}
+
+body .but-menu:hover {
+    background-color: rgba(255, 140, 0, 0.856);
+
+    filter: brightness(1.08);
+}
+
+body .but-menu svg {
+    width: 22px;
+    height: 22px;
+
+    flex-shrink: 0;
+
+    stroke-width: 2.4;
+}
+
+/* Marca no lugar do "Bem vindo" */
+
+body .texto {
+    flex: 1;
+
+    text-align: left;
+}
+
+.marca {
+    font-size: 22px;
+    font-weight: 800;
+    letter-spacing: 0.2px;
+
+    color: #ffffff;
+}
+
+.marca-destaque {
+    color: #f57a1c;
+}
+
+body header button:focus-visible,
+body .Menu a:focus-visible,
+body .Menu button:focus-visible {
+    outline: 3px solid #ffffff;
+    outline-offset: 2px;
+}
+
+
+/* =========================
+   MENU LATERAL
+========================= */
+
+body .Menu {
+    position: fixed;
+    top: 75px;
+    left: 0;
+
+    width: 280px;
+    max-width: 86vw;
+
+    height: calc(100vh - 75px);
+    height: calc(100dvh - 75px);
+
+    padding: 16px 14px 14px;
+
+    display: flex;
+    flex-direction: column;
+
+    background-color: #223488;
+
+    color: rgb(241, 226, 206);
+
+    transform: translateX(-100%);
+
+    /* Fechado: some também para o teclado (Tab) */
+    visibility: hidden;
+
+    transition: transform 0.3s ease, visibility 0s linear 0.3s;
+
+    z-index: 9;
+}
+
+body .Menu.aberto {
+    transform: translateX(0);
+
+    visibility: visible;
+
+    box-shadow: 8px 0 24px rgba(0, 0, 0, 0.25);
+
+    transition: transform 0.3s ease, visibility 0s;
+}
+
+.menu-nav {
+    flex: 1;
+
+    min-height: 0;
+
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+
+    overflow-y: auto;
+
+    padding-bottom: 8px;
+}
+
+body .menu-link {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+
+    margin: 0;
+    padding: 13px 14px;
+
+    border: none;
+    border-radius: 12px;
+
+    color: rgb(241, 226, 206);
+
+    font-size: 17px;
+    font-weight: 600;
+    line-height: 1.2;
+
+    text-decoration: none;
+
+    transition: background-color 0.2s, color 0.2s;
+}
+
+body .menu-link svg {
+    width: 22px;
+    height: 22px;
+
+    flex-shrink: 0;
+
+    stroke-width: 2;
+}
+
+body .menu-link:hover {
+    background-color: rgba(255, 255, 255, 0.12);
+
+    color: #ffffff;
+}
+
+/* Página atual: fundo claro e faixa laranja na lateral */
+
+body .menu-link.link-ativo {
+    background-color: rgba(255, 255, 255, 0.2);
+
+    box-shadow: inset 4px 0 0 #f57a1c;
+
+    color: #ffffff;
+
+    font-weight: 700;
+}
+
+
+/* =========================
+   "OLÁ, APELIDO" (rodapé do menu)
+========================= */
+
+.menu-usuario {
+    margin-top: 8px;
+    padding-top: 12px;
+
+    border-top: 1px solid rgba(255, 255, 255, 0.16);
+}
+
+/* Painel que expande para cima, com o Meu Perfil */
+
+.menu-usuario-painel {
+    display: grid;
+    grid-template-rows: 0fr;
+
+    visibility: hidden;
+
+    transition: grid-template-rows 0.25s ease, visibility 0s linear 0.25s;
+}
+
+.menu-usuario.aberto .menu-usuario-painel {
+    grid-template-rows: 1fr;
+
+    visibility: visible;
+
+    transition: grid-template-rows 0.25s ease, visibility 0s;
+}
+
+.menu-usuario-painel-interno {
+    min-height: 0;
+
+    overflow: hidden;
+}
+
+.menu-usuario.aberto .menu-usuario-painel-interno {
+    padding-bottom: 8px;
+}
+
+body .menu-usuario-botao {
+    width: 100%;
+
+    padding: 10px 12px;
+
+    display: flex;
+    align-items: center;
+    gap: 12px;
+
+    border: none;
+    border-radius: 12px;
+
+    background-color: rgba(255, 255, 255, 0.1);
+
+    color: #ffffff;
+
+    font-family: inherit;
+    text-align: left;
+
+    cursor: pointer;
+
+    transition: background-color 0.2s;
+}
+
+body .menu-usuario-botao:hover,
+body .menu-usuario.tem-ativo .menu-usuario-botao {
+    background-color: rgba(255, 255, 255, 0.18);
+}
+
+.menu-usuario-avatar {
+    width: 40px;
+    height: 40px;
+
+    flex-shrink: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 50%;
+
+    background-color: rgba(255, 255, 255, 0.18);
+}
+
+.menu-usuario-avatar svg {
+    width: 22px;
+    height: 22px;
+}
+
+.menu-usuario-texto {
+    flex: 1;
+
+    min-width: 0;
+
+    display: flex;
+    flex-direction: column;
+
+    line-height: 1.3;
+}
+
+.menu-usuario-texto strong {
+    overflow: hidden;
+
+    font-size: 15.5px;
+    font-weight: 700;
+
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.menu-usuario-texto small {
+    overflow: hidden;
+
+    font-size: 12.5px;
+
+    color: rgba(241, 226, 206, 0.8);
+
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.menu-usuario-seta {
+    width: 18px;
+    height: 18px;
+
+    flex-shrink: 0;
+
+    transition: transform 0.25s ease;
+}
+
+.menu-usuario.aberto .menu-usuario-seta {
+    transform: rotate(180deg);
+}
+
+
+/* =========================
+   MENOS MOVIMENTO
+========================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+    body .Menu,
+    body .Menu.aberto,
+    .menu-usuario-painel,
+    .menu-usuario.aberto .menu-usuario-painel,
+    .menu-usuario-seta {
+        transition: none;
+    }
+}
