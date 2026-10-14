@@ -1,0 +1,240 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    min-height: 100vh;
+    margin: 0;
+    padding: 40px;
+    background: linear-gradient(#ffa825e3, #ff7f24e0, #fc660fd3);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    color: #1e293b;
+    font-family: sans-serif;
+}
+
+
+
+.cartao-principal {
+    background: #ffffff;
+    width: 100%; 
+    max-width: 1170px;
+    min-height: 720px;
+    border-radius: 16px;
+    box-shadow: 0 25px 60px rgba(0, 0, 0, 0.18);
+    display: flex;
+    overflow: hidden;
+}
+
+/*Painel de boas vindas */
+.metade-esquerda-roxa {
+    flex: 1.2;
+    padding: 60px;
+    display: flex;
+    background: url("./fundo-laranja.webp");
+    flex-direction: column;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.conteudo-boas-vindas {
+    position: relative;
+    z-index: 2;
+    color: #ffffff;
+    max-width: 420px;
+}
+
+.titulo-boas-vindas {
+    font-size: 42px;
+    font-weight: 700;
+    margin-bottom: 20px;
+    letter-spacing: -0.5px;
+}
+
+.subtitulo-boas-vindas {
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 18px;
+    line-height: 1.6;
+}
+
+/*formulário de login */
+.metade-direita-branca {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 60px;
+    background: #ffffff; 
+}
+
+.bloco-do-formulario {
+    width: 100%;
+    max-width: 400px;
+}
+
+.titulo-login {
+    color: #1e293b;
+    font-size: 36px;
+    font-weight: 700;
+    margin-bottom: 35px;
+    letter-spacing: -0.5px;
+}
+
+#formulario-login {
+    width: 100%;
+}
+
+.area-do-input {
+    width: 100%;
+    margin-bottom: 24px;
+}
+
+.etiqueta-do-input {
+    display: block;
+    text-align: left;
+    margin-bottom: 10px;
+    font-size: 14px;
+    font-weight: 600;
+    color: #000000b0;
+}
+
+.caixa-do-input {
+    width: 100%;
+    min-height: 56px; 
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 14px;
+    padding: 12px 18px;
+    border: 1.5px solid #e2e8f0; 
+    border-radius: 14px; 
+    background: #f8fafc; 
+    transition: all 0.2s ease;
+}
+
+.caixa-do-input:hover {
+    border-color: #3a88ed;
+    background: #fbfbfe;
+}
+
+.caixa-do-input:focus-within {
+    border-color: #3a88ed; 
+    background: #ffffff; 
+    box-shadow: 0 0 0 4px rgba(124, 58, 237, 0.1); 
+}
+
+.emoji-do-input {
+    font-size: 20px;
+    user-select: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+}
+
+.caixa-do-input input {
+    flex: 1;
+    width: 100%;
+    border: none;
+    outline: none;
+    background: transparent;
+    font-size: 16px;
+    color: #1e293b;
+}
+
+.caixa-do-input input::placeholder {
+    color: #cbd5e1;
+}
+/*
+.opcoes-extras {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+    font-size: 14px;
+}
+
+.lembrar-usuario {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: #64748b;
+    cursor: pointer;
+}
+
+.lembrar-usuario input {
+    accent-color: #7c3aed;
+    cursor: pointer;
+    width: 16px;
+    height: 16px;
+}
+
+.link-esqueci-senha {
+    color: #64748b;
+    text-decoration: none;
+}
+
+.link-esqueci-senha:hover {
+    color: #7c3aed;
+    text-decoration: underline;
+}*/
+
+.botao-enviar {
+    width: 100%;
+    background: linear-gradient(45deg, #F59E0B, #E11D48);
+    color: #ffffff;
+    border: none;
+    padding: 16px 22px;
+    border-radius: 14px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    box-shadow: 0 4px 12px rgba(85, 58, 237, 0.25); 
+}
+
+.botao-enviar:hover {
+    transform: translateY(-1px); 
+    box-shadow: 0 6px 20px rgba(156, 58, 237, 0.35); 
+    background: linear-gradient(45deg, #f59f0bea, #e11d47de);
+}
+
+.links-do-rodape {
+    text-align: center;
+    margin-top: 30px;
+    font-size: 15px;
+    color: #64748b;
+}
+
+.links-do-rodape a {
+    color: rgb(0, 132, 255);
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.links-do-rodape a:hover {
+    text-decoration: underline;
+}
+
+@media (max-width: 850px) {
+    .cartao-principal {
+        flex-direction: column; 
+        max-width: 480px;
+        min-height: auto;
+    }
+
+    .titulo-boas-vindas {
+        font-size: 32px;
+    }
+
+    .metade-direita-branca {
+        padding: 50px 30px;
+    }
+}

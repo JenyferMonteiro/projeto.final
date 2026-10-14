@@ -1,0 +1,471 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    min-height: 100vh;
+    background: linear-gradient(#ffa825e3, #ff7f24e0, #fc660fd3);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 40px;
+    color: #1e293b;
+}
+
+.cartao-principal {
+    background: #fff;
+    width: 100%;
+    max-width: 900px;
+    min-height: 500px;
+    border-radius: 24px;
+    box-shadow: 0 25px 60px rgba(0, 0, 0, .18);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 60px;
+}
+
+.bloco-do-formulario {
+    width: 100%;
+    max-width: 760px;
+}
+
+.cabecalho {
+    text-align: center;
+    margin-bottom: 35px;
+}
+
+.titulo {
+    color: #111827;
+    font-size: 34px;
+    font-weight: 700;
+    letter-spacing: -.5px;
+}
+
+.form-step {
+    display: none;
+}
+
+.form-step.active {
+    display: block;
+}
+
+.titulo-secao {
+    color: #dc9b31;
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 16px;
+}
+
+.curso-titulo {
+    margin-top: 30px;
+}
+
+.area-do-input {
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+.etiqueta-do-input {
+    display: block;
+    margin-bottom: 10px;
+    font-size: 14px;
+    font-weight: 600;
+    color: #475569;
+}
+
+.caixa-do-input {
+    width: 100%;
+    min-height: 54px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 12px 18px;
+    border: 1.5px solid #e2e8f0;
+    border-radius: 14px;
+    background: #f8fafc;
+    transition: .2s;
+}
+
+.caixa-do-input:focus-within {
+    border-color: #3a88ed;
+    background: #fff;
+    box-shadow: 0 0 0 4px rgba(58, 136, 237, .1);
+}
+
+.caixa-do-input input {
+    flex: 1;
+    width: 100%;
+    border: none;
+    outline: none;
+    background: transparent;
+    font-size: 16px;
+    color: #1e293b;
+}
+
+/* Cursos */
+
+.opcoes-curso {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 12px;
+    width: 100%;
+}
+
+.opcoes-curso .opcao {
+    width: 100%;
+    min-width: 0;
+}
+
+/* Séries */
+
+.opcoes-serie {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 12px;
+    flex: 1;
+    min-width: 0;
+}
+
+.opcao {
+    display: block;
+    width: 100%;
+    min-width: 0;
+    cursor: pointer;
+}
+
+.opcao input {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.conteudo-opcao {
+    width: 100%;
+    min-height: 52px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 16px;
+    border: 1.5px solid #e2e8f0;
+    border-radius: 14px;
+    background: #fff;
+    color: #111827;
+    font-size: 15px;
+    font-weight: 500;
+    transition: .2s;
+}
+
+.opcoes-curso .conteudo-opcao {
+    height: 100%;
+    min-height: 64px;
+    padding: 12px;
+    gap: 8px;
+    font-size: 14px;
+    overflow-wrap: anywhere;
+}
+
+.conteudo-opcao svg {
+    width: 21px;
+    height: 21px;
+    color: #fa8732;
+    flex-shrink: 0;
+}
+
+.opcao:hover .conteudo-opcao {
+    border-color: #3a88ed;
+    background: #fbfbfe;
+}
+
+.opcao input:checked + .conteudo-opcao {
+    border-color: #3a88ed;
+    background: rgba(89, 89, 189, .08);
+    color: #fa8732;
+    box-shadow: 0 0 0 2px rgba(89, 89, 189, .08);
+}
+
+/* Séries e recado */
+
+.serie-com-info {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.serie-com-info .opcoes-serie {
+    flex: 1;
+    min-width: 0;
+}
+
+.info-anos-disciplinas {
+    flex: 0 0 195px;
+    min-width: 0;
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    padding: 8px 0;
+    border: none;
+    background: transparent;
+    color: #475569;
+    font-size: 12px;
+    line-height: 1.4;
+}
+
+.info-anos-disciplinas .icone-info {
+    width: 25px;
+    height: 25px;
+    min-width: 25px;
+    border-radius: 50%;
+    background: #3459a8;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 15px;
+}
+
+/* Área de disciplinas */
+
+#area-disciplinas[hidden],
+#mensagem-disciplinas[hidden] {
+    display: none !important;
+}
+
+#area-disciplinas {
+    width: 100%;
+    margin-top: 28px;
+}
+
+.titulo-disciplinas-com-botao {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 15px;
+    margin-bottom: 18px;
+}
+
+.titulo-disciplinas-com-botao .disciplinas-titulo {
+    margin: 0;
+}
+
+/* Cartões de disciplinas alinhados */
+
+.lista-disciplinas {
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    align-items: stretch;
+    gap: 12px;
+    margin-top: 18px;
+}
+
+.lista-disciplinas .course-balloon {
+    display: block;
+    width: 100%;
+    min-width: 0;
+    margin: 0;
+    cursor: pointer;
+}
+
+.lista-disciplinas .course-balloon input {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.lista-disciplinas .balloon-content {
+    width: 100%;
+    min-height: 56px;
+    height: 100%;
+    padding: 14px 16px;
+    display: flex;
+    align-items: center;
+    overflow-wrap: anywhere;
+    border: 1.5px solid #e2e8f0;
+    border-radius: 14px;
+    background: #fff;
+    color: #475569;
+    font-size: 14px;
+    font-weight: 500;
+    transition: .2s;
+}
+
+.lista-disciplinas .course-balloon:hover .balloon-content {
+    border-color: #ff6f1a;
+    background: #fffaf6;
+}
+
+.lista-disciplinas .course-balloon input:checked + .balloon-content {
+    border-color: #ff6f1a;
+    background: rgba(255, 111, 26, .08);
+    color: #d96518;
+    box-shadow: 0 0 0 2px rgba(255, 111, 26, .08);
+}
+
+/* Botão selecionar disciplinas */
+
+.btn-disciplinas {
+    min-height: 38px;
+    padding: 9px 15px;
+    border-radius: 10px;
+    border: 1.5px solid #8daaf0;
+    background: #fff;
+    color: #4169c1;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: .2s;
+}
+
+.btn-disciplinas:hover {
+    background: #4169c1;
+    border-color: #4169c1;
+    color: #fff;
+}
+
+.mensagem-disciplinas,
+.descricao-secao {
+    font-size: 14px;
+    line-height: 1.5;
+    color: #64748b;
+    margin-top: 12px;
+}
+
+/* Botões de navegação */
+
+.button-group {
+    width: 100%;
+    display: flex;
+    gap: 12px;
+    margin-top: 32px;
+}
+
+.btn-primary,
+.btn-secondary {
+    min-height: 52px;
+    padding: 14px 22px;
+    border-radius: 14px;
+    font-size: 15px;
+    font-weight: 600;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: .2s;
+}
+
+.btn-primary {
+    flex: 1;
+    background: linear-gradient(45deg, #f59e0b, #e11d48);
+    color: #fff;
+    border: none;
+    box-shadow: 0 4px 12px rgba(85, 58, 237, .2);
+}
+
+.btn-primary:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 6px 20px rgba(76, 58, 237, .3);
+}
+
+.btn-secondary {
+    flex: 1;
+    background: #fff;
+    color: #475569;
+    border: 1.5px solid #e2e8f0;
+}
+
+.btn-secondary:hover {
+    border-color: #5959bd;
+    color: #5959bd;
+    background: #fbfbfe;
+}
+
+button:disabled {
+    opacity: .6;
+    cursor: wait;
+}
+
+/* Responsividade */
+
+@media (max-width: 800px) {
+    body {
+        padding: 25px;
+    }
+
+    .cartao-principal {
+        padding: 40px 30px;
+    }
+
+    .serie-com-info {
+        flex-wrap: wrap;
+    }
+
+    .serie-com-info .opcoes-serie {
+        flex-basis: 100%;
+    }
+
+    .info-anos-disciplinas {
+        flex-basis: 100%;
+    }
+}
+
+@media (max-width: 600px) {
+    .opcoes-curso {
+        grid-template-columns: 1fr;
+    }
+
+    .lista-disciplinas {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 550px) {
+    body {
+        padding: 15px;
+    }
+
+    .cartao-principal {
+        padding: 30px 22px;
+        border-radius: 20px;
+    }
+
+    .titulo {
+        font-size: 27px;
+    }
+
+    .opcoes-serie {
+        grid-template-columns: 1fr;
+    }
+
+    .titulo-disciplinas-com-botao {
+        align-items: stretch;
+        flex-direction: column;
+    }
+
+    .btn-disciplinas {
+        width: 100%;
+    }
+
+    .button-group {
+        flex-direction: column;
+    }
+
+    .btn-primary,
+    .btn-secondary {
+        width: 100%;
+    }
+}
+
+@media (max-width: 400px) {
+    .lista-disciplinas {
+        grid-template-columns: 1fr;
+    }
+}

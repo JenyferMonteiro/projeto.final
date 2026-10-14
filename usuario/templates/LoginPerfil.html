@@ -1,0 +1,120 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>StudyPlan | Login</title>
+
+    <link rel="stylesheet" href="{% static 'LoginPerfil/LoginPerfil.css' %}">
+</head>
+
+<body>
+
+    <div class="cartao-principal">
+
+        <div class="metade-esquerda-roxa">
+
+            <div class="conteudo-boas-vindas">
+                <h1 class="titulo-boas-vindas">
+                    Bem-Vindo ao StudyPlan!
+                </h1>
+
+                <p class="subtitulo-boas-vindas">
+                    Planeje seus estudos e acompanhe sua rotina acadêmica no CEFET-MG.
+                </p>
+            </div>
+        </div>
+
+
+        <div class="metade-direita-branca">
+
+            <div class="bloco-do-formulario">
+
+                <h2 class="titulo-login">
+                    Conecte-se e planeje.
+                </h2>
+
+                <form id="formulario-login" method="POST">
+
+                    {% csrf_token %}
+
+                    <div class="area-do-input">
+
+                        <label class="etiqueta-do-input">
+                            Digite seu email
+                        </label>
+
+                        <div class="caixa-do-input">
+
+                            <span class="emoji-do-input">
+                                ✉️
+                            </span>
+
+                            <input type="email" id="email" name="email" placeholder="E-mail"
+                                required>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="area-do-input">
+
+                        <label class="etiqueta-do-input">
+                            Digite sua senha
+                        </label>
+
+                        <div class="caixa-do-input">
+
+                            <span class="emoji-do-input">
+                                🔒
+                            </span>
+
+                            <input type="password" id="senha" name="senha" placeholder="Senha" required>
+
+                        </div>
+
+                    </div>
+
+
+                    <button type="submit" class="botao-enviar">
+                        ENTRAR
+                    </button>
+
+                </form>
+
+
+                {% if erro %}
+
+                <p class="mensagem-erro">
+                    {{ erro }}
+                </p>
+
+                {% endif %}
+
+
+                <div class="links-do-rodape">
+
+                    <span>
+                        Não possui cadastro?
+
+                        <a href="{% url 'cadastro' %}">
+                            Criar Conta
+                        </a>
+                    </span>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</body>
+
+</html>

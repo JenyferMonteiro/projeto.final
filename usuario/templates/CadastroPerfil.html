@@ -1,0 +1,149 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StudyPlan | Cadastro</title>
+    <link rel="stylesheet" href="{% static 'CadastroPerfil/CadastroPerfil.css' %}">
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+    <div class="cartao-principal">
+        <div class="bloco-do-formulario">
+            <div class="cabecalho">
+                <h1 class="titulo">Crie sua conta no StudyPlan</h1>
+            </div>
+
+            <!-- Etapa 1 -->
+            <form id="form-step-1" class="form-step active" onsubmit="event.preventDefault(); goToStep2();">
+                <p class="titulo-secao">Informações pessoais</p>
+
+                <div class="area-do-input">
+                    <label class="etiqueta-do-input" for="nome-usuario">Nome de usuário:</label>
+                    <div class="caixa-do-input">
+                        <span class="emoji-do-input">👤</span>
+                        <input type="text" id="nome-usuario" name="nome" placeholder="Digite seu nome" required>
+                    </div>
+                </div>
+
+                <div class="area-do-input">
+                    <label class="etiqueta-do-input" for="email-usuario">Email:</label>
+                    <div class="caixa-do-input">
+                        <span class="emoji-do-input">✉️</span>
+                        <input type="email" id="email-usuario" name="email" placeholder="Digite seu email" required>
+                    </div>
+                </div>
+
+                <div class="area-do-input">
+                    <label class="etiqueta-do-input" for="senha-usuario">Senha de acesso:</label>
+                    <div class="caixa-do-input">
+                        <span class="emoji-do-input">🔒</span>
+                        <input type="password" id="senha-usuario" name="senha" placeholder="Digite sua senha" required>
+                    </div>
+                </div>
+
+                <p class="titulo-secao curso-titulo">Selecione seu curso</p>
+
+                <div class="opcoes-curso">
+                    {% for curso in cursos %}
+                    <label class="opcao">
+                        <input type="radio" name="curso" value="{{ curso.id }}" required>
+                        <div class="conteudo-opcao">
+                            {% if 'Mecatrônica' in curso.nome %}
+                                <i data-lucide="bot"></i>
+                            {% elif 'Informática' in curso.nome %}
+                                <i data-lucide="monitor"></i>
+                            {% elif 'Edificações' in curso.nome %}
+                                <i data-lucide="building-2"></i>
+                            {% else %}
+                                <i data-lucide="book-open"></i>
+                            {% endif %}
+                            <span>{{ curso.nome }}</span>
+                        </div>
+                    </label>
+                    {% endfor %}
+                </div>
+
+                <div class="button-group">
+                    <a href="{% url 'login' %}" class="btn-secondary">Voltar para o login</a>
+                    <button type="button" class="btn-primary" onclick="goToStep2()">Próxima etapa</button>
+                </div>
+            </form>
+
+            <!-- Etapa 2 -->
+            <form id="form-step-2" class="form-step" onsubmit="event.preventDefault(); goToStep3();">
+                <p class="titulo-secao">Selecione sua série</p>
+
+                <div class="serie-com-info">
+                    <div class="opcoes-serie">
+                        <label class="opcao">
+                            <input type="radio" name="serie" value="1" required>
+                            <div class="conteudo-opcao"><span>1º Ano</span></div>
+                        </label>
+                        <label class="opcao">
+                            <input type="radio" name="serie" value="2">
+                            <div class="conteudo-opcao"><span>2º Ano</span></div>
+                        </label>
+                        <label class="opcao">
+                            <input type="radio" name="serie" value="3">
+                            <div class="conteudo-opcao"><span>3º Ano</span></div>
+                        </label>
+                    </div>
+
+                    <div class="info-anos-disciplinas" id="info-anos-disciplinas">
+                        <div class="icone-info">i</div>
+                        <div>
+                            Você pode selecionar disciplinas de qualquer ano.
+                            Basta clicar no ano desejado.
+                        </div>
+                    </div>
+                </div>
+
+                <div id="area-disciplinas">
+                    <div class="titulo-disciplinas-com-botao" id="disciplinas-cabecalho">
+                        <p class="titulo-secao disciplinas-titulo">Escolha as disciplinas do seu curso</p>
+                        <button type="button" id="btn-selecionar-todas" class="btn-disciplinas">
+                            Selecionar todas
+                        </button>
+                    </div>
+
+                    <div class="lista-disciplinas" id="lista-disciplinas"></div>
+                    <p class="mensagem-disciplinas" id="mensagem-disciplinas" hidden></p>
+                </div>
+
+                <div class="button-group">
+                    <button type="button" class="btn-secondary" onclick="goToStep1()">Voltar</button>
+                    <button type="submit" class="btn-primary" id="btn-proxima-3">Próximo</button>
+                </div>
+            </form>
+
+            <!-- Etapa 3 -->
+            <form id="form-step-3" class="form-step" onsubmit="event.preventDefault(); finalizarCadastro();">
+                <div class="titulo-disciplinas-com-botao">
+                    <p class="titulo-secao disciplinas-titulo">Formação Geral</p>
+                    <button type="button" id="btn-selecionar-todas-geral" class="btn-disciplinas">
+                        Selecionar todas
+                    </button>
+                </div>
+
+                <p class="descricao-secao">
+                    Selecione as disciplinas de Formação Geral que você deseja adicionar.
+                </p>
+
+                <div class="lista-disciplinas" id="lista-formacao-geral"></div>
+
+                <div class="button-group">
+                    <button type="button" class="btn-secondary" id="btn-voltar-2" onclick="goToStep2From3()">Voltar</button>
+                    <button type="submit" class="btn-primary" id="btn-finalizar">Concluir cadastro</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="{% static 'CadastroPerfil/script.js' %}"></script>
+    <script>
+        if (window.lucide) lucide.createIcons();
+    </script>
+</body>
+</html>
